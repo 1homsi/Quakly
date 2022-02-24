@@ -1,7 +1,8 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, Image, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
+import { Icon } from 'react-native-elements';
 
 const RegisterScreen = () => {
     const [email, setEmail] = useState('')
@@ -29,44 +30,79 @@ const RegisterScreen = () => {
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"
-        >
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}
+        <>
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior="padding"
+            >
+                <Icon
+                    style={styles.icon}
+                    reverseColor
+                    name='home'
+                    type='font-awesome'
+                    size={35}
+                    onPress={() => navigation.replace("Home")}
                 />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    style={styles.input}
-                    secureTextEntry
-                />
-            </View>
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleSignUp}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Register</Text>
-                </TouchableOpacity>
-            </View>
-            <Text onPress={() => { navigation.replace("Login") }}>Login</Text>
-        </KeyboardAvoidingView>
+                <Image style={styles.HeaderImage} source={require("../images/Register.png")} />
+                <Text style={styles.head}>Create Account</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholderTextColor="#003f5c"
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholderTextColor="#003f5c"
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
+                </View>
+
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress={handleSignUp}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Register</Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.GoToLogin} onPress={() => { navigation.replace("Login") }}>Login</Text>
+            </KeyboardAvoidingView>
+        </>
     )
 }
 
 export default RegisterScreen
 
 const styles = StyleSheet.create({
+    icon: {
+        marginBottom: 25,
+    },
+    HeaderImage: {
+        marginBottom: 50,
+        width: 200,
+        height: 200,
+    },
+    head: {
+        color: "#003f5c",
+        fontWeight: "bold",
+        fontSize: 29,
+        marginBottom: 50,
+    },
+    IntroText: {
+        color: "#003f5c",
+        fontSize: 16,
+        marginBottom: 30,
+    },
     container: {
         flex: 1,
+        backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -74,39 +110,35 @@ const styles = StyleSheet.create({
         width: '80%'
     },
     input: {
+        borderWidth: 1.5,
+        borderColor: "#003f5c",
         backgroundColor: 'white',
         paddingHorizontal: 15,
         paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
+        borderRadius: 15,
+        marginTop: 10,
     },
     buttonContainer: {
-        width: '60%',
+        width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,
     },
     button: {
-        backgroundColor: '#0782F9',
+        backgroundColor: '#89CFF0',
         width: '100%',
-        padding: 15,
-        borderRadius: 10,
+        padding: 20,
+        borderRadius: 30,
         alignItems: 'center',
-    },
-    buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
     },
     buttonText: {
         color: 'white',
         fontWeight: '700',
-        fontSize: 16,
+        fontSize: 17,
     },
-    buttonOutlineText: {
-        color: '#0782F9',
-        fontWeight: '700',
-        fontSize: 16,
+    GoToLogin: {
+        marginTop: 25,
+        color: "#003f5c",
+        fontSize: 18,
     },
 })
