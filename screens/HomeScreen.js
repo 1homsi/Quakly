@@ -45,8 +45,9 @@ const HomeScreen = () => {
           style={styles.list}
           data={Data}
           renderItem={({ item }) => (
-            <Items key={item.title} title={item.title} dis={item.dis} />
+            <Items title={item.title} dis={item.dis} />
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
 
