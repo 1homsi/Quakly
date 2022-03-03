@@ -9,10 +9,12 @@ import AddProduct from './screens/AddProduct';
 import PorductView from './screens/PorductView';
 import ResetPassword from './screens/ResetPassword';
 import Options from './screens/Options';
+import { LogBox } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  LogBox.ignoreLogs(['Setting a timer']);
   return (
     <>
       <NavigationContainer>
