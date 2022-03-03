@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native'
 import Items from '../components/Items'
 import { auth } from '../firebase'
 import Data from '../Data'
@@ -19,7 +19,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* <Text>Email: {auth.currentUser?.email}</Text> */}
       <View style={styles.Top}>
         <View style={{ flex: 1 }}>
@@ -51,7 +51,7 @@ const HomeScreen = () => {
         />
       </View>
 
-    </View >
+    </SafeAreaView >
   )
 }
 

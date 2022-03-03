@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 import React from 'react'
 import { auth } from "../firebase"
 
 const AddProduct = () => {
     const navigation = useNavigation()
     return (
-        <View>
-            {!auth.currentUser ?
+        <SafeAreaView>
+            {/* {!auth.currentUser ?
                 <>
                     {navigation.replace("Home")}
                 </>
@@ -14,8 +14,8 @@ const AddProduct = () => {
                 <>
                     <Text>Hello world</Text>
                 </>
-            }
-        </View>
+            } */}
+        </SafeAreaView>
     )
 }
 
