@@ -1,88 +1,96 @@
-import { Platform, SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
-import { auth } from "../firebase";
-import { withTheme } from "react-native-elements";
+import { auth, db } from "../firebase";
 
 const AddProduct = () => {
   const navigation = useNavigation();
 
+  const [name, setName] = React.useState("");
+  const [number, setNumber] = React.useState("");
+  const [description, setDescription] = React.useState("");
 
+  React.useEffect(() => {
+    if (!auth.currentUser) {
+      navigation.replace("Login")
+    }
+
+    db.collection("Product").where("Email", "==", auth.currentUser?.email)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+        });
+      });
+  }, [])
+
+  const handleAddProduct = () => {
+    var Data = {
+      Name: name,
+      PhoneNumber: number,
+      Description: description,
+      Email: auth.currentUser?.email,
+    }
+
+    db.collection('Product').add(Data)
+  }
 
   return (
     <SafeAreaView style={styles.main}>
-        
-      {!auth.currentUser ? (
-        <View>{/* {navigation.replace("Home")} */}</View>
-      ) : (
-        //   <>
-        // <View style={styles.container}>
-        //   <Text style={styles.head}>Quakly</Text>
-        // </View>
-
-        // <View styles={styles.section}>
-        //   <Text style={styles.title}>Share Your Food</Text>
-        //   <TextInput styles={styles.name} placeholder={'Enter your name'}>Name: </TextInput>
-        // </View>
-        // </>
-        <View styles={styles.container}>
-          <Text style={styles.sectionTitle}>Share Your Food</Text>
-          <TextInput
-            placeholder="Enter your Name"
-            placeholderTextColor="#003f5c"
-            // onChangeText={(text) => {
-            //   this.setState({ name: text });
-            // }}
-            style={styles.inputs}
-          />
-          <TextInput
-            placeholder="Enter your PhoneNumber"
-            placeholderTextColor="#003f5c"
-            // onChangeText={(text) => {
-            //   this.setState({ phoneNumber: text });
-            // }}
-            style={styles.inputs}
-          />
-          <TextInput
-            placeholder="Enter Food Description"
-            placeholderTextColor="#003f5c"
-            // onChangeText={(text) => {
-            //   this.setState({ desc: text });
-            // }}
-            style={styles.inputs}
-          />
-          <TextInput
-            placeholder="Enter your Country"
-            placeholderTextColor="#003f5c"
-            // onChangeText={(text) => {
-            //   this.setState({ country: text });
-            // }}
-            style={styles.inputs}
-          />
-          <TextInput
-            placeholder="Enter your City"
-            placeholderTextColor="#003f5c"
-            // onChangeText={(text) => {
-            //   this.setState({ city: text });
-            // }}
-            style={styles.inputs}
-          />
-          <TextInput
-            placeholder="Location Link"
-            placeholderTextColor="#003f5c"
-            // onChangeText={(text) => {
-            //   this.setState({ location: text });
-            // }}
-            style={styles.inputs}
-          />
-          {/* <TouchableOpacity>
-              <View styles={styles.button}>
-                    <Text styles={buttonText}>Send</Text>
-              </View>
-          </TouchableOpacity> */}
+      <View styles={styles.container}>
+        <Text style={styles.sectionTitle}>Share Your Food</Text>
+        <TextInput
+          placeholder="Enter your Name"
+          placeholderTextColor="#003f5c"
+          value={name}
+          onChangeText={text => setName(text)}
+          style={styles.inputs}
+        />
+        <TextInput
+          placeholder="Enter your Phone Number"
+          placeholderTextColor="#003f5c"
+          value={number}
+          onChangeText={text => setNumber(text)}
+          style={styles.inputs}
+        />
+        <TextInput
+          placeholder="Enter Food Description"
+          placeholderTextColor="#003f5c"
+          value={description}
+          onChangeText={text => setDescription(text)}
+          style={styles.inputs}
+        />
+        <TextInput
+          placeholder="Enter your Country"
+          placeholderTextColor="#003f5c"
+          style={styles.inputs}
+        />
+        <TextInput
+          placeholder="Enter your City"
+          placeholderTextColor="#003f5c"
+          style={styles.inputs}
+        />
+        {/* <TextInput
+          placeholder="Location Link"
+          placeholderTextColor="#003f5c"
+          style={styles.inputs}
+        /> */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={handleAddProduct}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.replace("Home")}
+            style={styles.buttonOutline}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
         </View>
-      )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -93,26 +101,21 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: "white",
-    // width: "100%",
-    // alignContent: "center",
-    // justifyContent: "center",
   },
+
   nav: {
-    position: "relative",  
+    position: "relative",
     backgroundColor: "red"
   },
+
   container: {
-    // margin: 50,
-    // marginTop: 150,
-    // backgroundColor: "white",
-    
-    paddingTop: 120,
-    paddingHorizontal: 20,
-      
-    
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
+
   sectionTitle: {
-    color: '#4ecdc4',
+    color: '#003f5c',
     fontSize: 24,
     fontWeight: 'bold',
     paddingHorizontal: 15,
@@ -122,45 +125,44 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 
-  //   head: {
-  //     color: "#003f5c",
-  //     fontWeight: "bold",
-  //     fontSize: 25,
-  //     paddingTop: 80,
-  //     paddingHorizontal: 20,
-  //     backgroundColor: 'red',
-  //     alignItems: "center",
-  //   },
-
-  //   title: {
-  //       paddingBottom: '160%',
-  //       color: 'black',
-  //       paddingHorizontal: '5%',
-  //       fontSize: 28
-  //   },
-
   inputs: {
     borderWidth: 1.5,
-    borderColor: "white",
-    backgroundColor: '#f8f4f4',
+    borderColor: "#003f5c",
+    backgroundColor: 'white',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 25,
-    marginHorizontal: 20,
+    borderRadius: 15,
     marginTop: 10,
   },
 
-  button: {
-    borderRadius: 8,
-    paddingVertical: 14,
-    paddingHorizontal: 10,
-    backgroundColor: '#f01d71',
+  buttonContainer: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
   },
+
+  button: {
+    backgroundColor: '#89CFF0',
+    width: '80%',
+    padding: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    fontSize: 16,
-    textAlign: 'center',
-  }
+    fontWeight: '700',
+    fontSize: 17,
+  },
+
+  buttonOutline: {
+    marginTop: 10,
+    backgroundColor: 'gray',
+    width: '60%',
+    padding: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+
 });

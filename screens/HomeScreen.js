@@ -8,7 +8,6 @@ import { Icon } from "react-native-elements"
 
 const HomeScreen = () => {
   const navigation = useNavigation()
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Top}>

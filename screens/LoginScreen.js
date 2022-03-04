@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+
   head: {
     color: "#003f5c",
     fontWeight: "bold",
