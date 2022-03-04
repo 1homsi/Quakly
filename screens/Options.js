@@ -51,34 +51,40 @@ export default function Option() {
     return (
         <SafeAreaView style={styles.bigMain}>
 
-        <View style={styles.topNav}>
-            <Text style={styles.title}>Reset Password</Text>
-        </View>
-        <View style={styles.container}>
-            <Text style={styles.emailSec}>Email: {auth.currentUser?.email}</Text>
-            <TouchableOpacity   
-                onPress={handleSignOut}
-                style={styles.button1}
-            >
-                <Text style={styles.buttonText}>Sign out</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={handleDeleteUser}
-                style={styles.button2}
-            >
-                <Text style={styles.buttonText}>Delete Account</Text>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.topNav}>
+                <Text style={styles.title}>Reset Password</Text>
+            </View>
+            <View style={styles.container}>
+                <Text style={styles.emailSec}>Email: {auth.currentUser?.email}</Text>
+                <TouchableOpacity
+                    onPress={handleSignOut}
+                    style={styles.button1}
+                >
+                    <Text style={styles.buttonText}>Sign out</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.replace("MyProducts")}
+                    style={styles.button1}
+                >
+                    <Text style={styles.buttonText}>My Products</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={handleDeleteUser}
+                    style={styles.button2}
+                >
+                    <Text style={styles.buttonText}>Delete Account</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    bigMain:{
-        flex:1,
+    bigMain: {
+        flex: 1,
         backgroundColor: '#fff'
     },
-    topNav:{
+    topNav: {
         backgroundColor: "darkblue",
         paddingTop: 60
     },
@@ -91,10 +97,10 @@ const styles = StyleSheet.create({
     },
     title: {
         marginLeft: 10,
-        marginBottom:40,
+        marginBottom: 40,
         color: 'white',
         fontSize: 25,
-        fontWeight: "bold"        
+        fontWeight: "bold"
     },
     emailSec: {
         fontSize: 22

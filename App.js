@@ -10,6 +10,7 @@ import PorductView from './screens/PorductView';
 import ResetPassword from './screens/ResetPassword';
 import Options from './screens/Options';
 import { LogBox } from 'react-native';
+import MyProducts from './screens/MyProducts';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="AddProduct" component={AddProduct} />
           <Stack.Screen options={{ headerShown: false }} name="ViewProduct" component={PorductView} />
           <Stack.Screen options={{ headerShown: false }} name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen options={{ headerShown: false }} name="MyProducts" component={MyProducts} />
           <Stack.Screen options={{ headerShown: false }} name="Option" component={Options} />
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
           <Stack.Screen options={{ headerShown: false }} name="Register" component={RegisterScreen} />

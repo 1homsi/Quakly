@@ -6,6 +6,7 @@ import { auth, db } from "../firebase";
 
 const AddProduct = () => {
   const navigation = useNavigation();
+  const [data, setData] = React.useState([])
 
   const [name, setName] = React.useState("");
   const [number, setNumber] = React.useState("");
@@ -15,14 +16,20 @@ const AddProduct = () => {
     if (!auth.currentUser) {
       navigation.replace("Login")
     }
-
-    db.collection("Product").where("Email", "==", auth.currentUser?.email)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
+    if (auth.currentUser) {
+      arr = []
+      db.collection("Product").where("Email", "==", auth.currentUser?.email)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            arr.push(doc.id)
+            arr.push(doc.data())
+            console.log(arr[0] + " " + arr[1].Name)
+            setData(arr)
+            arr = []
+          });
         });
-      });
+    }
   }, [])
 
   const handleAddProduct = () => {
