@@ -9,19 +9,27 @@ import { Icon } from "react-native-elements"
 const HomeScreen = () => {
   const navigation = useNavigation()
 
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Login")
-      })
-      .catch(error => alert(error.message))
-  }
-
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text>Email: {auth.currentUser?.email}</Text> */}
       <View style={styles.Top}>
+        {!auth.currentUser ?
+          <>
+            <Text onPress={() => { navigation.replace("Login") }}>lol</Text>
+          </> :
+          <>
+            <TouchableOpacity style={styles.ProfileDot} >
+              <Icon
+                style={styles.icon}
+                reverseColor
+                name='user'
+                type='font-awesome'
+                size={35}
+                onPress={() => navigation.navigate("Option")}
+              />
+            </TouchableOpacity>
+          </>
+        }
+
         <View style={{ flex: 1 }}>
           <Text placeholder="Test" style={styles.HeadTitlte} >Quakly</Text>
         </View>
@@ -33,13 +41,7 @@ const HomeScreen = () => {
           size={35}
           onPress={() => navigation.replace("AddProduct")}
         />
-      </View>
-      <TouchableOpacity
-        onPress={handleSignOut}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity>
+      </View >
       <View style={styles.ListView}>
         <FlatList
           style={styles.list}

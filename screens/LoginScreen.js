@@ -76,7 +76,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <Text style={styles.NotAUser} onPress={() => { navigation.replace("Register") }}>Not a user? Register!</Text>
-        <Text style={styles.ForgotPassword} onPress={() => { navigation.replace("ViewProduct") }}>Forgot Password?</Text>
+        <Text style={styles.ForgotPassword} onPress={() => { navigation.replace("ResetPassword") }}>Forgot Password?</Text>
       </KeyboardAvoidingView>
     </>
   )
