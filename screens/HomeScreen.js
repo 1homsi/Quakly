@@ -31,7 +31,7 @@ const HomeScreen = () => {
           name='plus'
           type='font-awesome'
           size={35}
-          onPress={() => navigation.replace("Home")}
+          onPress={() => navigation.replace("AddProduct")}
         />
       </View>
       <TouchableOpacity
