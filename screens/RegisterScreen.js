@@ -7,6 +7,8 @@ import { Icon } from 'react-native-elements';
 const RegisterScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [Otherpassword, setOtherPassword] = useState('')
+
 
     const navigation = useNavigation()
 
@@ -20,13 +22,18 @@ const RegisterScreen = () => {
     }, [])
 
     const handleSignUp = () => {
-        auth
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Registered with:', user.email);
-            })
-            .catch(error => alert(error.message))
+        if (password !== Otherpassword) {
+            alert("Passwords do not match")
+        }
+        else {
+            auth
+                .createUserWithEmailAndPassword(email, password)
+                .then(userCredentials => {
+                    const user = userCredentials.user;
+                    console.log('Registered with:', user.email);
+                })
+                .catch(error => alert(error.message))
+        }
     }
 
     return (
@@ -59,6 +66,14 @@ const RegisterScreen = () => {
                         placeholder="Password"
                         value={password}
                         onChangeText={text => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
+                    <TextInput
+                        placeholderTextColor="#003f5c"
+                        placeholder="Repeat Password"
+                        value={Otherpassword}
+                        onChangeText={text => setOtherPassword(text)}
                         style={styles.input}
                         secureTextEntry
                     />
