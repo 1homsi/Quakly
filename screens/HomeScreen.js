@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     fontSize: 30,
     fontWeight: "800",
-    fontFamily: "notoserif",
     color: "#fff",
   },
   icon: {

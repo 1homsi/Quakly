@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 30,
     fontWeight: "800",
-    fontFamily: "notoserif",
     color: "#fff",
   },
   //   resetPass:{

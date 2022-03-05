@@ -16,22 +16,25 @@ const AddProduct = () => {
     if (!auth.currentUser) {
       navigation.replace("Login");
     }
+
     if (auth.currentUser) {
-      arr = [];
-      db.collection("Product")
-        .where("Email", "==", auth.currentUser?.email)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            arr.push(doc.id);
-            arr.push(doc.data());
-            console.log(arr[0] + " " + arr[1].Name);
-            setData(arr);
-            arr = [];
+
+
+      const fetchData = async () => {
+        await db.collection("Product")
+          .where("Email", "==", auth.currentUser?.email)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              console.log(Object.assign({ id: doc.id }, doc.data()));
+              setData(Object.assign({ id: doc.id }, doc.data()));
+            });
           });
-        });
+      }
+      fetchData();
     }
   }, []);
+
 
   const handleAddProduct = () => {
     var Data = {
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 30,
     fontWeight: "800",
-    fontFamily: "notoserif",
+
     color: "#fff",
   },
 
