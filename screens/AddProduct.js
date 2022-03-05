@@ -6,7 +6,7 @@ import { auth, db } from "../firebase";
 
 const AddProduct = () => {
   const navigation = useNavigation();
-  const [data, setData] = React.useState([])
+  const [data, setData] = React.useState([]);
 
   const [name, setName] = React.useState("");
   const [number, setNumber] = React.useState("");
@@ -14,23 +14,24 @@ const AddProduct = () => {
 
   React.useEffect(() => {
     if (!auth.currentUser) {
-      navigation.replace("Login")
+      navigation.replace("Login");
     }
     if (auth.currentUser) {
-      arr = []
-      db.collection("Product").where("Email", "==", auth.currentUser?.email)
+      arr = [];
+      db.collection("Product")
+        .where("Email", "==", auth.currentUser?.email)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            arr.push(doc.id)
-            arr.push(doc.data())
-            console.log(arr[0] + " " + arr[1].Name)
-            setData(arr)
-            arr = []
+            arr.push(doc.id);
+            arr.push(doc.data());
+            console.log(arr[0] + " " + arr[1].Name);
+            setData(arr);
+            arr = [];
           });
         });
     }
-  }, [])
+  }, []);
 
   const handleAddProduct = () => {
     var Data = {
@@ -38,34 +39,36 @@ const AddProduct = () => {
       PhoneNumber: number,
       Description: description,
       Email: auth.currentUser?.email,
-    }
+    };
 
-    db.collection('Product').add(Data)
-  }
+    db.collection("Product").add(Data);
+  };
 
   return (
     <SafeAreaView style={styles.main}>
       <View styles={styles.container}>
-        <Text style={styles.sectionTitle}>Share Your Food</Text>
+        <View style={styles.topNav}>
+          <Text style={styles.title}>Share Your Food</Text>
+        </View>
         <TextInput
           placeholder="Enter your Name"
           placeholderTextColor="#003f5c"
           value={name}
-          onChangeText={text => setName(text)}
+          onChangeText={(text) => setName(text)}
           style={styles.inputs}
         />
         <TextInput
           placeholder="Enter your Phone Number"
           placeholderTextColor="#003f5c"
           value={number}
-          onChangeText={text => setNumber(text)}
+          onChangeText={(text) => setNumber(text)}
           style={styles.inputs}
         />
         <TextInput
           placeholder="Enter Food Description"
           placeholderTextColor="#003f5c"
           value={description}
-          onChangeText={text => setDescription(text)}
+          onChangeText={(text) => setDescription(text)}
           style={styles.inputs}
         />
         <TextInput
@@ -84,10 +87,7 @@ const AddProduct = () => {
           style={styles.inputs}
         /> */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={handleAddProduct}
-            style={styles.button}
-          >
+          <TouchableOpacity onPress={handleAddProduct} style={styles.button}>
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -109,10 +109,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-
+  topNav: {
+    marginTop: 80,
+    flexDirection: "row",
+    textAlign: "center",
+    marginBottom: 40,
+    marginTop: 40,
+    paddingBottom: 10,
+    paddingTop: 10,
+    backgroundColor: "#fc5c65",
+  },
   nav: {
     position: "relative",
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
 
   container: {
@@ -121,23 +130,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  sectionTitle: {
-    color: '#003f5c',
-    fontSize: 24,
-    fontWeight: 'bold',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 25,
-    marginHorizontal: 10,
-    marginTop: 30,
+  title: {
+    marginLeft: 10,
+    fontSize: 30,
+    fontWeight: "800",
+    fontFamily: "notoserif",
+    color: "#fff",
   },
 
   inputs: {
     borderWidth: 1.5,
     borderColor: "#003f5c",
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 10,
+    marginHorizontal: 20,
     borderRadius: 15,
     marginTop: 10,
   },
@@ -150,26 +157,25 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#89CFF0',
-    width: '80%',
+    backgroundColor: "#4ecdc4",
+    width: "80%",
     padding: 20,
     borderRadius: 30,
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   buttonText: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 17,
   },
 
   buttonOutline: {
     marginTop: 10,
-    backgroundColor: 'gray',
-    width: '60%',
+    backgroundColor: "gray",
+    width: "60%",
     padding: 20,
     borderRadius: 30,
-    alignItems: 'center',
+    alignItems: "center",
   },
-
 });
