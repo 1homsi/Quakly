@@ -36,7 +36,7 @@ const RegisterScreen = () => {
         .createUserWithEmailAndPassword(email, password)
         .then((userCredentials) => {
           const user = userCredentials.user;
-          console.log("Registered with:", user.email);
+          // console.log("Registered with:", user.email);
         })
         .catch((error) => alert(error.message));
     }

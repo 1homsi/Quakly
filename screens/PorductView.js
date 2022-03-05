@@ -1,10 +1,11 @@
 import { SafeAreaView, Text } from 'react-native'
 import React from 'react'
 
-const PorductView = () => {
+const PorductView = ({ route }) => {
+    const { id } = route.params;
     return (
         <SafeAreaView>
-            <Text>PorductView</Text>
+            <Text>{id}</Text>
         </SafeAreaView>
     )
 }

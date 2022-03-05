@@ -1,7 +1,9 @@
 import { Text, StyleSheet, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 const Items = (props) => {
+    const navigation = useNavigation();
     return (
         <TouchableOpacity style={styles.container}>
             <View style={styles.inner}>
@@ -9,7 +11,12 @@ const Items = (props) => {
                 <Text>{props.title}</Text>
             </View>
             <Text>{props.dis}</Text>
-        </TouchableOpacity>
+            {/* //TODO: Make a TouchableOpacity */}
+            <Text onPress={() => {
+                navigation.replace("ViewProduct"),
+                    { screen: "ViewProduct", params: { id: props.id } }
+            }}>Open</Text>
+        </TouchableOpacity >
     )
 }
 

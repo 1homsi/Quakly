@@ -41,11 +41,13 @@ const AddProduct = () => {
       PhoneNumber: number,
       Description: description,
       Email: auth.currentUser?.email,
-      Location: location
+      Location: location,
+      ProductTaken: false
     };
     if (location != null) {
       db.collection("Product").add(Data);
     }
+    navigation.replace("Home");
   };
 
   return (
@@ -129,21 +131,17 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: "red",
   },
-
   container: {
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
   },
-
   title: {
     marginLeft: 10,
     fontSize: 30,
     fontWeight: "800",
-
     color: "#fff",
   },
-
   inputs: {
     borderWidth: 1.5,
     borderColor: "#003f5c",
@@ -154,14 +152,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
   },
-
   buttonContainer: {
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30,
   },
-
   button: {
     backgroundColor: "#4ecdc4",
     width: "80%",
@@ -169,13 +165,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
   },
-
   buttonText: {
     color: "white",
     fontWeight: "700",
     fontSize: 17,
   },
-
   buttonOutline: {
     marginTop: 10,
     backgroundColor: "gray",

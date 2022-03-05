@@ -13,19 +13,18 @@ const MyProducts = () => {
             navigation.replace("Login")
         }
 
+
         if (auth.currentUser) {
-            if (auth.currentUser) {
-                db.collection("Product").where("Email", "==", auth.currentUser?.email)
-                    .get()
-                    .then((querySnapshot) => {
-                        setLoading(false)
-                        querySnapshot.forEach((doc) => {
-                            console.log(Object.assign({ id: doc.id }, doc.data()));
-                            let Userdata = Object.assign({ id: doc.id }, doc.data())
-                            setData(e => [...e, Userdata]);
-                        });
+            db.collection("Product").where("Email", "==", auth.currentUser?.email)
+                .get()
+                .then((querySnapshot) => {
+                    setLoading(false)
+                    querySnapshot.forEach((doc) => {
+                        // console.log(Object.assign({ id: doc.id }, doc.data()));
+                        let Userdata = Object.assign({ id: doc.id }, doc.data())
+                        setData(e => [...e, Userdata]);
                     });
-            }
+                });
         }
     }, [])
 
@@ -41,8 +40,9 @@ const MyProducts = () => {
     }
 
     const handleDelete = (item) => {
-        console.log(item.id)
+        // console.log(item.id)
         db.collection("Product").doc(item.id).delete()
+        //TODO: remove product from state array
         navigation.replace("Home")
     }
 
