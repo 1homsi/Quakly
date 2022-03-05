@@ -8,7 +8,8 @@ import * as Location from 'expo-location';
 const AddProduct = () => {
   const navigation = useNavigation();
   const [location, setLocation] = React.useState(null);
-
+  const [loading, setloading] = React.useState(true);
+  const [title, setTitle] = React.useState("");
   const [name, setName] = React.useState("");
   const [number, setNumber] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -23,18 +24,19 @@ const AddProduct = () => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        //TODO: Edit Permission not granted
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location)
+      setloading(false)
     })();
   }, []);
 
 
   const handleAddProduct = () => {
     var Data = {
+      title: title,
       Name: name,
       PhoneNumber: number,
       Description: description,
@@ -48,57 +50,59 @@ const AddProduct = () => {
 
   return (
     <SafeAreaView style={styles.main}>
-      <View styles={styles.container}>
-        <View style={styles.topNav}>
-          <Text style={styles.title}>Share Your Food</Text>
-        </View>
-        <TextInput
-          placeholder="Enter your Name"
-          placeholderTextColor="#003f5c"
-          value={name}
-          onChangeText={(text) => setName(text)}
-          style={styles.inputs}
-        />
-        <TextInput
-          placeholder="Enter your Phone Number"
-          placeholderTextColor="#003f5c"
-          value={number}
-          onChangeText={(text) => setNumber(text)}
-          style={styles.inputs}
-        />
-        <TextInput
-          placeholder="Enter Food Description"
-          placeholderTextColor="#003f5c"
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-          style={styles.inputs}
-        />
-        <TextInput
-          placeholder="Enter your Country"
-          placeholderTextColor="#003f5c"
-          style={styles.inputs}
-        />
-        <TextInput
-          placeholder="Enter your City"
-          placeholderTextColor="#003f5c"
-          style={styles.inputs}
-        />
-        {/* <TextInput
-          placeholder="Location Link"
-          placeholderTextColor="#003f5c"
-          style={styles.inputs}
-        /> */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleAddProduct} style={styles.button}>
-            <Text style={styles.buttonText}>Add</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.replace("Home")}
-            style={styles.buttonOutline}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
+      <View>
+        {loading ?
+          <>
+            <Text>Loading</Text>
+          </>
+          :
+          <>
+            <View styles={styles.container}>
+              <View style={styles.topNav}>
+                <Text style={styles.title}>Share Your Food</Text>
+              </View>
+              <TextInput
+                placeholder="Enter title"
+                placeholderTextColor="#003f5c"
+                value={title}
+                onChangeText={(text) => setTitle(text)}
+                style={styles.inputs}
+              />
+              <TextInput
+                placeholder="Enter your Name"
+                placeholderTextColor="#003f5c"
+                value={name}
+                onChangeText={(text) => setName(text)}
+                style={styles.inputs}
+              />
+              <TextInput
+                placeholder="Enter your Phone Number"
+                placeholderTextColor="#003f5c"
+                value={number}
+                onChangeText={(text) => setNumber(text)}
+                style={styles.inputs}
+              />
+              <TextInput
+                placeholder="Enter Food Description"
+                placeholderTextColor="#003f5c"
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+                style={styles.inputs}
+              />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={handleAddProduct} style={styles.button}>
+                  <Text style={styles.buttonText}>Add</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.replace("Home")}
+                  style={styles.buttonOutline}
+                >
+                  <Text style={styles.buttonText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        }
       </View>
     </SafeAreaView>
   );
