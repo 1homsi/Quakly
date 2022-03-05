@@ -3,10 +3,11 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { auth, db } from "../firebase";
+import * as Location from 'expo-location';
 
 const AddProduct = () => {
   const navigation = useNavigation();
-  const [data, setData] = React.useState([]);
+  const [location, setLocation] = React.useState(null);
 
   const [name, setName] = React.useState("");
   const [number, setNumber] = React.useState("");
@@ -16,23 +17,19 @@ const AddProduct = () => {
     if (!auth.currentUser) {
       navigation.replace("Login");
     }
+  }, []);
 
-    if (auth.currentUser) {
-
-
-      const fetchData = async () => {
-        await db.collection("Product")
-          .where("Email", "==", auth.currentUser?.email)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              console.log(Object.assign({ id: doc.id }, doc.data()));
-              setData(Object.assign({ id: doc.id }, doc.data()));
-            });
-          });
+  React.useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
       }
-      fetchData();
-    }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location)
+    })();
   }, []);
 
 
@@ -42,9 +39,11 @@ const AddProduct = () => {
       PhoneNumber: number,
       Description: description,
       Email: auth.currentUser?.email,
+      Location: location
     };
-
-    db.collection("Product").add(Data);
+    if (location != null) {
+      db.collection("Product").add(Data);
+    }
   };
 
   return (
