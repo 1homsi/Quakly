@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { auth, db } from "../firebase";
 import * as Location from 'expo-location';
+import LottieView from "lottie-react-native";
 import BottomNav from "../components/BottomNav";
 
 const AddProduct = () => {
@@ -15,9 +16,14 @@ const AddProduct = () => {
   const [number, setNumber] = React.useState("");
   const [description, setDescription] = React.useState("");
 
+
   React.useEffect(() => {
     if (!auth.currentUser) {
       navigation.replace("Login");
+    } else {
+      db.collection("Users").doc(auth.currentUser?.email).get().then((doc) => {
+        setName(doc.data().name);
+      });
     }
   }, []);
 
@@ -38,7 +44,7 @@ const AddProduct = () => {
   const handleAddProduct = () => {
     var Data = {
       title: title,
-      Name: name,
+      Name: name || "",
       PhoneNumber: number,
       Description: description,
       Email: auth.currentUser?.email,
@@ -56,7 +62,11 @@ const AddProduct = () => {
       <View>
         {loading ?
           <>
-            <Text>Loading</Text>
+            <LottieView
+              source={require("../assets/88404-loading-bubbles.json")}
+              style={styles.animation}
+              autoPlay
+            />
           </>
           :
           <>
@@ -69,13 +79,6 @@ const AddProduct = () => {
                 placeholderTextColor="#003f5c"
                 value={title}
                 onChangeText={(text) => setTitle(text)}
-                style={styles.inputs}
-              />
-              <TextInput
-                placeholder="Enter your Name"
-                placeholderTextColor="#003f5c"
-                value={name}
-                onChangeText={(text) => setName(text)}
                 style={styles.inputs}
               />
               <TextInput
@@ -107,7 +110,7 @@ const AddProduct = () => {
           </>
         }
       </View>
-      <BottomNav />
+      {/* <BottomNav /> */}
     </SafeAreaView>
   );
 };
@@ -120,18 +123,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   topNav: {
-    marginTop: 80,
     flexDirection: "row",
     textAlign: "center",
     marginBottom: 40,
     marginTop: 40,
     paddingBottom: 10,
     paddingTop: 10,
-    backgroundColor: "#fc5c65",
   },
   nav: {
     position: "relative",
-    backgroundColor: "red",
   },
   container: {
     alignContent: "center",
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 30,
     fontWeight: "800",
-    color: "#fff",
+    color: "#000",
   },
   inputs: {
     borderWidth: 1.5,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
-    backgroundColor: "#4ecdc4",
+    backgroundColor: "#fc5c65",
     width: "80%",
     padding: 20,
     borderRadius: 30,
@@ -179,5 +179,9 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 30,
     alignItems: "center",
+  },
+  animation: {
+    width: "100%",
+    height: "90%",
   },
 });

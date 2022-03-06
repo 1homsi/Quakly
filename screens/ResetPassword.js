@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   button: {
-    backgroundColor: "#4ecdc4",
+    backgroundColor: "#fc5c65",
     width: "80%",
     padding: 20,
     borderRadius: 30,
@@ -95,13 +95,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingBottom: 10,
     paddingTop: 5,
-    backgroundColor: "#fc5c65",
   },
   title: {
     marginLeft: 10,
     fontSize: 30,
     fontWeight: "800",
-    color: "#fff",
+    color: "#000",
   },
   //   resetPass:{
   //     borderWidth: 1.5,

@@ -81,7 +81,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   HeadTitlte: {
     marginLeft: "5%",
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "800",
     color: "#000",
   },

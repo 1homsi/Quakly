@@ -6,19 +6,25 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  Image
 } from "react-native";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/BottomNav";
+import LottieView from "lottie-react-native";
+
 
 export default function Option() {
-  const navigation = useNavigation();
 
-  // React.useEffect(() => {
-  //     if (!auth.currentUser) {
-  //         navigation.replace("Home")
-  //     }
-  // }, [])
+  const [user, setUser] = React.useState([]);
+
+  React.useEffect(() => {
+    db.collection("Users").doc(auth.currentUser?.email).get().then((doc) => {
+      setUser(doc.data());
+    });
+  }, []);
+
+  const navigation = useNavigation();
 
   const handleSignOut = () => {
     auth
@@ -54,23 +60,45 @@ export default function Option() {
       ]
     );
 
+
+  let Name = ""
+
+  if (user.Namse) {
+    Name = user.Name.substring(0, 1).toUpperCase();
+  } else {
+    Name = "";
+  }
+
+
   return (
     <SafeAreaView style={styles.bigMain}>
       <View style={styles.topNav}>
-        <Text style={styles.title}>My Profile</Text>
+        <Text style={styles.title}>Settings</Text>
+        <LottieView
+          source={require("../assets/65035-profile.json")}
+          style={styles.animation}
+          autoPlay
+        />
       </View>
       <View style={styles.container}>
-        <Text style={styles.emailSec}>Email: {auth.currentUser?.email}</Text>
-        <TouchableOpacity onPress={handleSignOut} style={styles.button1}>
-          <Text style={styles.buttonText}>Sign out</Text>
-        </TouchableOpacity>
+        <View style={styles.UserInfo}>
+          <Image style={styles.Image} source={{ uri: `https://avatars.dicebear.com/api/initials/H.svg`, }} />
+          <View style={styles.Inner}>
+            <Text style={styles.nameSec}>{user.Name}</Text>
+            <Text style={styles.emailSec}>{auth.currentUser?.email}</Text>
+          </View>
+
+        </View>
         <TouchableOpacity
           onPress={() => navigation.navigate("MyProducts")}
           style={styles.button1}
         >
-          <Text style={styles.buttonText}>My Products</Text>
+          <Text style={styles.buttonText}>Posted Products</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleDeleteUser} style={styles.button2}>
+        <TouchableOpacity onPress={handleSignOut} style={styles.button1}>
+          <Text style={styles.buttonText}>Sign out</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleDeleteUser} style={styles.buttonOutline}>
           <Text style={styles.buttonText}>Delete Account</Text>
         </TouchableOpacity>
       </View>
@@ -80,36 +108,57 @@ export default function Option() {
 }
 
 const styles = StyleSheet.create({
+  animation: {
+    marginTop: 2,
+    marginLeft: "auto",
+    width: "20%",
+    height: "100%",
+  },
+  Inner: {
+    marginLeft: 20,
+  },
+  UserInfo: {
+    borderWidth: 0.5,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    padding: 20,
+    width: "100%",
+    flexDirection: "row",
+  },
   bigMain: {
     flex: 1,
   },
   topNav: {
-    marginTop: 80,
     flexDirection: "row",
     textAlign: "center",
     marginBottom: 10,
-    marginTop: 40,
     paddingBottom: 10,
     paddingTop: 10,
   },
   container: {
     flex: 1,
-    // paddingBottom: "90%",
     alignItems: "center",
-    justifyContent: "center",
   },
   title: {
+    marginTop: 20,
+    marginBottom: 20,
     marginLeft: 10,
-    fontSize: 30,
+    fontSize: 35,
+    fontWeight: "800",
+    color: "#000",
+  },
+  nameSec: {
+    marginTop: 20,
+    fontSize: 20,
     fontWeight: "800",
     color: "#000",
   },
   emailSec: {
-    fontSize: 22,
+    marginTop: 10,
+    fontSize: 15,
   },
   button1: {
-    backgroundColor: "#4ecdc4",
-    width: "100%",
+    backgroundColor: "#fc5c65",
     padding: 20,
     borderRadius: 30,
     alignItems: "center",
@@ -118,13 +167,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
   },
-  button2: {
+  buttonOutline: {
     backgroundColor: "gray",
-    width: "100%",
     padding: 20,
     borderRadius: 30,
     alignItems: "center",
-    width: "80%",
+    width: "60%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
@@ -134,4 +182,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 17,
   },
+  Image: {
+    width: 100,
+    height: 100,
+    borderRadius: 150 / 2,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "red"
+  }
 });
