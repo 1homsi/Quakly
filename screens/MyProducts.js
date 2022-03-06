@@ -3,6 +3,7 @@ import React from 'react'
 import { db, auth } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import BottonNav from '../components/BottomNav'
+import LottieView from "lottie-react-native";
 
 const MyProducts = () => {
     const navigation = useNavigation();
@@ -63,7 +64,11 @@ const MyProducts = () => {
         <SafeAreaView style={styles.container}>
             {loading ?
                 <>
-                    <Text>Loading</Text>
+                    <LottieView
+                        source={require("../assets/88404-loading-bubbles.json")}
+                        style={styles.animation}
+                        autoPlay
+                    />
                 </>
                 :
                 <>
@@ -96,5 +101,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 32,
+    },
+    animation: {
+        width: "100%",
+        height: "90%",
     },
 });

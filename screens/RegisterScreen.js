@@ -9,13 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { Icon } from "react-native-elements";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Otherpassword, setOtherPassword] = useState("");
+  const [name, setName] = useState("");
 
   const navigation = useNavigation();
 
@@ -32,15 +33,21 @@ const RegisterScreen = () => {
     if (password !== Otherpassword) {
       alert("Passwords do not match");
     } else {
+
+      db.collection("Users").doc(email).set({
+        Name: name,
+        Email: email,
+      })
+
       auth
         .createUserWithEmailAndPassword(email, password)
         .then((userCredentials) => {
           const user = userCredentials.user;
-          // console.log("Registered with:", user.email);
         })
         .catch((error) => alert(error.message));
     }
   };
+
 
   return (
     <>
@@ -53,13 +60,19 @@ const RegisterScreen = () => {
           size={35}
           onPress={() => navigation.replace("Home")}
         />
-
         <Image
           style={styles.HeaderImage}
           source={require("../images/Register.png")}
         />
         <Text style={styles.head}>Create Account</Text>
         <View style={styles.inputContainer}>
+          <TextInput
+            placeholderTextColor="#003f5c"
+            placeholder="Name"
+            value={name}
+            onChangeText={(text) => setName(text)}
+            style={styles.input}
+          />
           <TextInput
             placeholderTextColor="#003f5c"
             placeholder="Email"
