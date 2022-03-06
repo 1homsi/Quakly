@@ -19,7 +19,7 @@ const BottomNav = () => {
                         }
                         reverseColor
                         name="home"
-                        type="font-awesome"
+                        type="font-awesome-5"
                         size={35}
                         onPress={() => {
                             if (route.name != "Home") {
@@ -66,7 +66,7 @@ const BottomNav = () => {
                                     }
                                     reverseColor
                                     name="user"
-                                    type="font-awesome"
+                                    type="feather"
                                     size={35}
                                     onPress={() => navigation.replace("Option")}
                                 />

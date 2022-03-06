@@ -82,7 +82,9 @@ export default function Option() {
       </View>
       <View style={styles.container}>
         <View style={styles.UserInfo}>
-          <Image style={styles.Image} source={{ uri: `https://avatars.dicebear.com/api/initials/H.svg`, }} />
+          <View style={styles.outerImage}>
+            <Image style={styles.Image} source={require("../images/Profile.jpg")} />
+          </View>
           <View style={styles.Inner}>
             <Text style={styles.nameSec}>{user.Name}</Text>
             <Text style={styles.emailSec}>{auth.currentUser?.email}</Text>
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "100%",
     flexDirection: "row",
+    marginBottom: 20,
   },
   bigMain: {
     flex: 1,
@@ -183,6 +186,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   Image: {
+    width: 80,
+    height: 80,
+  },
+  outerImage: {
+    justifyContent: "center",
+    alignItems: "center",
     width: 100,
     height: 100,
     borderRadius: 150 / 2,
