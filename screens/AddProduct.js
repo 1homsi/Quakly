@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { auth, db } from "../firebase";
 import * as Location from 'expo-location';
+import BottomNav from "../components/BottomNav";
 
 const AddProduct = () => {
   const navigation = useNavigation();
@@ -106,6 +107,7 @@ const AddProduct = () => {
           </>
         }
       </View>
+      <BottomNav />
     </SafeAreaView>
   );
 };

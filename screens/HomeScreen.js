@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Items from "../components/Items";
 import { auth, db } from "../firebase";
-import { Icon } from "react-native-elements";
+import BottomNav from "../components/BottomNav";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -71,54 +71,7 @@ const HomeScreen = () => {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.bottomNavItem}>
-          <Icon
-            style={styles.icon}
-            reverseColor
-            name="home"
-            type="font-awesome"
-            size={35}
-            onPress={() => navigation.replace("Home")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomNavItemAdd}>
-          <Icon
-            style={styles.icon}
-            reverseColor
-            name="plus"
-            type="font-awesome"
-            size={35}
-            onPress={() => navigation.replace("AddProduct")}
-          />
-        </TouchableOpacity>
-        <View>
-          {!auth.currentUser ? (
-            <>
-              <Text
-                onPress={() => {
-                  navigation.replace("Login");
-                }}
-              >
-                lol
-              </Text>
-            </>
-          ) : (
-            <>
-              <TouchableOpacity style={styles.bottomNavItem}>
-                <Icon
-                  style={styles.icon}
-                  reverseColor
-                  name="user"
-                  type="font-awesome"
-                  size={35}
-                  onPress={() => navigation.navigate("Option")}
-                />
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
-      </View>
+      <BottomNav />
     </SafeAreaView>
   );
 };

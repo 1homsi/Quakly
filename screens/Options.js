@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
+import BottomNav from "../components/BottomNav";
 
 export default function Option() {
   const navigation = useNavigation();
@@ -64,7 +65,7 @@ export default function Option() {
           <Text style={styles.buttonText}>Sign out</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.replace("MyProducts")}
+          onPress={() => navigation.navigate("MyProducts")}
           style={styles.button1}
         >
           <Text style={styles.buttonText}>My Products</Text>
@@ -73,6 +74,7 @@ export default function Option() {
           <Text style={styles.buttonText}>Delete Account</Text>
         </TouchableOpacity>
       </View>
+      <BottomNav />
     </SafeAreaView>
   );
 }
@@ -80,7 +82,6 @@ export default function Option() {
 const styles = StyleSheet.create({
   bigMain: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   topNav: {
     marginTop: 80,
@@ -90,12 +91,10 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingBottom: 10,
     paddingTop: 10,
-    backgroundColor: "#fc5c65",
   },
   container: {
-    paddingBottom: "90%",
     flex: 1,
-    backgroundColor: "white",
+    // paddingBottom: "90%",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 30,
     fontWeight: "800",
-    color: "#fff",
+    color: "#000",
   },
   emailSec: {
     fontSize: 22,

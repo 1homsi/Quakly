@@ -5,17 +5,12 @@ import { useNavigation } from '@react-navigation/native';
 const Items = (props) => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity style={styles.container}>
-            <View style={styles.inner}>
-                {/* <Image style={styles.image} source={require("../images/Login.png")} /> */}
-                <Text>{props.title}</Text>
-            </View>
+        <TouchableOpacity style={styles.container} onPress={() => {
+            navigation.navigate("ViewProduct"),
+                { screen: "ViewProduct", params: { id: props.id } }
+        }}>
+            <Text style={styles.title}>{props.title}</Text>
             <Text>{props.dis}</Text>
-            {/* //TODO: Make a TouchableOpacity */}
-            <Text onPress={() => {
-                navigation.replace("ViewProduct"),
-                    { screen: "ViewProduct", params: { id: props.id } }
-            }}>Open</Text>
         </TouchableOpacity >
     )
 }
@@ -24,16 +19,12 @@ export default Items
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#D1C7C7',
+        backgroundColor: '#dba0a3',
         width: '85%',
         height: 110,
         padding: 15,
         borderRadius: 10,
-        alignItems: 'center',
-        marginTop: 40,
-    },
-    inner: {
-        // flexDirection: 'row'
+        marginTop: 30,
     },
     image: {
         width: 85,
@@ -41,6 +32,6 @@ const styles = StyleSheet.create({
         marginRight: "30%"
     },
     title: {
-        // marginLeft: "30%"
+        fontSize: 20,
     }
 })  

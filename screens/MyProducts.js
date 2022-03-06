@@ -2,6 +2,7 @@ import { View, FlatList, StyleSheet, SafeAreaView, Text, Platform, Linking } fro
 import React from 'react'
 import { db, auth } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
+import BottonNav from '../components/BottomNav'
 
 const MyProducts = () => {
     const navigation = useNavigation();
