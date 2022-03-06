@@ -61,8 +61,8 @@ const BottomNav = () => {
                                 <Icon
                                     style={styles.icon}
                                     color={route.name === "Option" ?
-                                        '#000' :
-                                        '#ff7f77'
+                                        '#ff7f77' :
+                                        '#000'
                                     }
                                     reverseColor
                                     name="user"

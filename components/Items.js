@@ -6,8 +6,7 @@ const Items = (props) => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity style={styles.container} onPress={() => {
-            navigation.navigate("ViewProduct", {id: props.id})
-                // { screen: "ViewProduct", params: { id: props.id } }
+            navigation.navigate("ViewProduct", { id: props.id })
         }}>
             <Text style={styles.title}>{props.title}</Text>
             <Text>{props.dis}</Text>
