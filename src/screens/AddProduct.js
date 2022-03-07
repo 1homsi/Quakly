@@ -64,7 +64,7 @@ const AddProduct = () => {
         {loading ?
           <>
             <LottieView
-              source={require("../assets/88404-loading-bubbles.json")}
+              source={require("../../assets/88404-loading-bubbles.json")}
               style={styles.animation}
               autoPlay
             />

@@ -8,7 +8,7 @@ import {
   Alert,
   Image
 } from "react-native";
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/BottomNav";
 import LottieView from "lottie-react-native";
@@ -65,7 +65,7 @@ export default function Option() {
       <View style={styles.topNav}>
         <Text style={styles.title}>Settings</Text>
         <LottieView
-          source={require("../assets/65035-profile.json")}
+          source={require("../../assets/65035-profile.json")}
           style={styles.animation}
           autoPlay
         />

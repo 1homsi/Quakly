@@ -1,6 +1,6 @@
 import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
