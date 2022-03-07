@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Icon } from "react-native-elements";
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 
 const BottomNav = () => {
     const navigation = useNavigation();
@@ -39,7 +39,7 @@ const BottomNav = () => {
                         style={styles.iconPlus}
                         reverseColor
                         name="plus"
-                        type="font-awesome"
+                        type="font-awesome-5"
                         size={35}
                     />
                 </TouchableOpacity>
@@ -122,6 +122,5 @@ const styles = StyleSheet.create({
     },
     iconPlus: {
         color: "black",
-        zIndex: 10,
     }
 })

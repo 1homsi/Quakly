@@ -60,16 +60,6 @@ export default function Option() {
       ]
     );
 
-
-  let Name = ""
-
-  if (user.Namse) {
-    Name = user.Name.substring(0, 1).toUpperCase();
-  } else {
-    Name = "";
-  }
-
-
   return (
     <SafeAreaView style={styles.bigMain}>
       <View style={styles.topNav}>
@@ -93,11 +83,29 @@ export default function Option() {
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate("MyProducts")}
-          style={styles.button1}
+          style={styles.button}
         >
           <Text style={styles.buttonText}>Posted Products</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleSignOut} style={styles.button1}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Fav")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>View Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Terms")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Terms and Conditions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("About")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>About Us</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign out</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleDeleteUser} style={styles.buttonOutline}>
@@ -160,9 +168,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
   },
-  button1: {
+  button: {
     backgroundColor: "#fc5c65",
-    padding: 20,
+    padding: 15,
     borderRadius: 30,
     alignItems: "center",
     width: "80%",
@@ -172,7 +180,7 @@ const styles = StyleSheet.create({
   },
   buttonOutline: {
     backgroundColor: "gray",
-    padding: 20,
+    padding: 15,
     borderRadius: 30,
     alignItems: "center",
     width: "60%",

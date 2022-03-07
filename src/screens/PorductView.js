@@ -1,10 +1,15 @@
 import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { db } from "../firebase";
+import { Icon } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+
 
 const PorductView = ({ route }) => {
   const { id } = route.params;
   const [data, setData] = React.useState([]);
+  const navigation = useNavigation();
+
 
   useEffect(() => {
     db.collection("Product")
@@ -18,6 +23,14 @@ const PorductView = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Icon
+        style={styles.icon}
+        reverseColor
+        name="home"
+        type="font-awesome"
+        size={40}
+        onPress={() => navigation.replace("Home")}
+      />
       <View style={styles.Image}>
         <Image
           style={styles.HeaderImage}
@@ -74,15 +87,17 @@ const PorductView = ({ route }) => {
 export default PorductView;
 
 const styles = StyleSheet.create({
+  icon: {
+    marginTop: 20,
+    marginBottom: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   HeaderImage: {
     position: "absolute",
-    top: 40,
+    top: 50,
     width: 500,
     height: 300,
     height: 200,
@@ -94,7 +109,7 @@ const styles = StyleSheet.create({
   },
   description: {
     flex: 1,
-    bottom: 170,
+    bottom: 120,
     left: 5,
     marginLeft: 7,
     marginRight: 20,
@@ -110,37 +125,37 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#003f5c",
   },
-    box: {
-        // flex: 1,
-        borderColor: "white",
-        borderRadius: 10,
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        shadowColor: "black",
-        shadowOffset: { width: 0, height: 0 },
-        elevation: 5,
-        backgroundColor: "white",
-        padding: 10,
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    buttonContainer: {
-        width: "60%",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 20,
-        left: 75,
-      },
-      button: {
-        backgroundColor: "#fc5c65",
-        width: "100%",
-        padding: 20,
-        borderRadius: 30,
-        alignItems: "center",
-      },
-      buttonText: {
-        color: "white",
-        fontWeight: "700",
-        fontSize: 17,
-      },
+  box: {
+    // flex: 1,
+    borderColor: "white",
+    borderRadius: 10,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 5,
+    backgroundColor: "white",
+    padding: 10,
+    marginTop: 30,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    left: 75,
+  },
+  button: {
+    backgroundColor: "#fc5c65",
+    width: "100%",
+    padding: 20,
+    borderRadius: 30,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 17,
+  },
 });

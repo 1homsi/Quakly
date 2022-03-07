@@ -2,7 +2,7 @@ import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
 import BottomNav from "../components/BottomNav";
@@ -49,6 +49,7 @@ const AddProduct = () => {
       Description: description,
       Email: auth.currentUser?.email,
       Location: location,
+      Favorite: false,
       ProductTaken: false
     };
     if (location != null) {
@@ -77,6 +78,7 @@ const AddProduct = () => {
               <TextInput
                 placeholder="Enter title"
                 placeholderTextColor="#003f5c"
+                maxLength={30}
                 value={title}
                 onChangeText={(text) => setTitle(text)}
                 style={styles.inputs}
@@ -84,11 +86,13 @@ const AddProduct = () => {
               <TextInput
                 placeholder="Enter your Phone Number"
                 placeholderTextColor="#003f5c"
+                maxLength={15}
                 value={number}
                 onChangeText={(text) => setNumber(text)}
                 style={styles.inputs}
               />
               <TextInput
+                maxLength={220}
                 placeholder="Enter Food Description"
                 placeholderTextColor="#003f5c"
                 value={description}
@@ -110,7 +114,6 @@ const AddProduct = () => {
           </>
         }
       </View>
-      {/* <BottomNav /> */}
     </SafeAreaView>
   );
 };
@@ -139,9 +142,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    marginLeft: 10,
-    fontSize: 30,
-    fontWeight: "800",
+    marginLeft: 15,
+    fontSize: 33,
+    fontWeight: "900",
     color: "#000",
   },
   inputs: {

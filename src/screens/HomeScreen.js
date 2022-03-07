@@ -10,7 +10,7 @@ import {
   FlatList,
 } from "react-native";
 import Items from "../components/Items";
-import { auth, db } from "../firebase";
+import { db } from "../../firebase";
 import BottomNav from "../components/BottomNav";
 
 const wait = (timeout) => {
@@ -42,7 +42,7 @@ const HomeScreen = () => {
     setRefreshing(true);
     setData([]);
     fetchAll();
-    wait(2000).then(() => setRefreshing(false));
+    wait(1000).then(() => setRefreshing(false));
   }, []);
 
   return (

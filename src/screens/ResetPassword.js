@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from "react-native";
 import React from "react";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

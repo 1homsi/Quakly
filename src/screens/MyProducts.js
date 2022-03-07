@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet, SafeAreaView, Text, Platform, Linking } from 'react-native'
 import React from 'react'
-import { db, auth } from '../firebase'
+import { db, auth } from '../../firebase'
 import { useNavigation } from '@react-navigation/native'
 import BottonNav from '../components/BottomNav'
 import LottieView from "lottie-react-native";
