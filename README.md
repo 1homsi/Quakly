@@ -118,5 +118,5 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 - Project Link: [Quakly](https://github.com/1homsi/Quakly)
 
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/1homsi/Quakly
 [issues-url]: https://github.com/1homsi/Quakly/issues
