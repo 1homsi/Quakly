@@ -1,14 +1,14 @@
 import { StyleSheet, SafeAreaView, Text, View } from 'react-native'
 import React from 'react'
 
-const Favorites = () => {
+const Choosen = () => {
     return (
         <SafeAreaView>
-            <Text>Favorites</Text>
+            <Text>Choosen</Text>
         </SafeAreaView>
     )
 }
 
-export default Favorites
+export default Choosen
 
 const styles = StyleSheet.create({})

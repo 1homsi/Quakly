@@ -5,7 +5,6 @@ import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { auth, db } from "../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
-import BottomNav from "../components/BottomNav";
 
 const AddProduct = () => {
   const navigation = useNavigation();
@@ -31,7 +30,7 @@ const AddProduct = () => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        //TODO: Edit Permission not granted
+        //TODO: Edit Permission not granted (if user does not grant permission ask him again)
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
@@ -52,10 +51,17 @@ const AddProduct = () => {
       Favorite: false,
       ProductTaken: false
     };
-    if (location != null) {
-      db.collection("Product").add(Data);
+
+    if (title === "" || number === "" || description === "" || name === "") {
+      //TODO: Edit Alert
+      console.log("Fields empty");
+    } else {
+
+      if (location != null) {
+        db.collection("Product").add(Data);
+      }
+      navigation.replace("Home");
     }
-    navigation.replace("Home");
   };
 
   return (

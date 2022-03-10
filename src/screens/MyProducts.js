@@ -8,9 +8,9 @@ import {
   Linking,
 } from "react-native";
 import React from "react";
-import { db, auth } from "../../firebase";
-import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/BottomNav";
+import { db, auth } from '../../firebase'
+import { useNavigation } from '@react-navigation/native'
 import LottieView from "lottie-react-native";
 
 const MyProducts = () => {
@@ -30,7 +30,6 @@ const MyProducts = () => {
         .then((querySnapshot) => {
           setLoading(false);
           querySnapshot.forEach((doc) => {
-            // console.log(Object.assign({ id: doc.id }, doc.data()));
             let Userdata = Object.assign({ id: doc.id }, doc.data());
             setData((e) => [...e, Userdata]);
           });
@@ -117,7 +116,7 @@ const MyProducts = () => {
           )}
         </>
       )}
-      <BottomNav />
+      {/* <BottomNav /> */}
     </SafeAreaView>
   );
 };
