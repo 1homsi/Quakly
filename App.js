@@ -1,7 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LogBox } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
@@ -9,7 +10,6 @@ import AddProduct from './src/screens/AddProduct';
 import PorductView from './src/screens/PorductView';
 import ResetPassword from './src/screens/ResetPassword';
 import Options from './src/screens/Options';
-import { LogBox } from 'react-native';
 import MyProducts from './src/screens/MyProducts';
 import AboutUs from './src/screens/AboutUs';
 import Choosen from './src/screens/Choosen';

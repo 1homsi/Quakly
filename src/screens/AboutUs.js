@@ -3,6 +3,7 @@ import { Icon } from "react-native-elements";
 import React from 'react'
 
 const AboutUs = () => {
+    const [focus, setFocus] = React.useState(false);
     return (
         <SafeAreaView>
             <Text style={styles.title}>
@@ -23,7 +24,7 @@ const AboutUs = () => {
 
                 </View>
                 <View style={styles.info}>
-                <Icon
+                    <Icon
                         style={styles.iconPlus}
                         color="#fc5c65"
                         name="envelope"
@@ -35,7 +36,7 @@ const AboutUs = () => {
                     </Text>
                 </View>
                 <View style={styles.info}>
-                <Icon
+                    <Icon
                         style={styles.iconPlus}
                         color="#fc5c65"
                         name="paper-plane"
@@ -45,17 +46,17 @@ const AboutUs = () => {
                     <Text style={styles.info_text}>
                         XXX-XXX-XXXX
                     </Text>
-                    
+
                 </View>
                 <View style={styles.info}>
                     <TextInput
-                    placeholder='Name'
-                    style={styles.input}
+                        placeholder='Name'
+                        style={styles.input}
                     />
                     <TextInput
-                    placeholder='Email'
-                    style={styles.input}
-                    onFocus={() => this.onFocus()}
+                        placeholder='Email'
+                        style={styles.input}
+                        onFocus={() => setFocus(!focus)}
                     />
                 </View>
             </View>
@@ -79,14 +80,14 @@ const styles = StyleSheet.create({
         height: '70%',
         width: '90%',
         backgroundColor: '#fff',
-        borderTopRightRadius: 150,   
-        borderRadius: 5,   
+        borderTopRightRadius: 150,
+        borderRadius: 5,
         shadowOpacity: 0.4,
         shadowRadius: 3,
         shadowColor: "red",
         elevation: 10,
-        
-        
+
+
 
     },
     title: {
