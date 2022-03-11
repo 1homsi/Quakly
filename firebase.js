@@ -19,6 +19,7 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth()
 const db = firebase.firestore()
+const storage = firebase.storage();
 db.settings({ experimentalForceLongPolling: true });
 
-export { auth, db };
+export { auth, db, storage };

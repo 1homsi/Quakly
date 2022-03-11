@@ -21,6 +21,13 @@ const PorductView = ({ route }) => {
       });
   }, []);
 
+  const handleAdd = () => {
+    db.collection("Product").doc(id).update({
+      "Favorite": true,
+      "ProductTaken": true,
+    })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Icon
@@ -76,7 +83,7 @@ const PorductView = ({ route }) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Add to Fav</Text>
+            <Text style={styles.buttonText} onPress={handleAdd}>Add</Text>
           </TouchableOpacity>
         </View>
       </View>

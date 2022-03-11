@@ -1,10 +1,11 @@
 import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
-import { auth, db } from "../../firebase";
+import { StyleSheet, View, TextInput, TouchableOpacity, Platform } from "react-native";
+import { auth, db, storage } from "../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
+import * as ImagePicker from 'expo-image-picker';
 
 const AddProduct = () => {
   const navigation = useNavigation();
@@ -14,6 +15,8 @@ const AddProduct = () => {
   const [name, setName] = React.useState("");
   const [number, setNumber] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [selectedImage, setSelectedImage] = React.useState("");
+  const [ImageUrl, setImageUrl] = React.useState("");
 
 
   React.useEffect(() => {
@@ -40,25 +43,63 @@ const AddProduct = () => {
   }, []);
 
 
+
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+    var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
+      : pickerResult.uri
+    const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1)
+    //TODO: Fix Upload image to firebase storage
+    setSelectedImage({
+      uri: url,
+      name: filename,
+      type: 'image/jpg',
+    });
+    console.log(selectedImage)
+  };
+
+  const Upload = () => {
+    storage
+      .ref()
+      .child(selectedImage.name)
+      .put(selectedImage)
+      .then(() => {
+        storage.ref(selectedImage.name).getDownloadURL().then((url) => {
+          setImageUrl(url)
+        })
+      })
+  }
+
+  //TODO: Fix Image url not being passed
   const handleAddProduct = () => {
     var Data = {
       title: title,
-      Name: name || "",
+      Name: name || "Anonymous",
       PhoneNumber: number,
       Description: description,
       Email: auth.currentUser?.email,
       Location: location,
       Favorite: false,
-      ProductTaken: false
+      ProductTaken: false,
+      Image: ImageUrl
     };
 
-    if (title === "" || number === "" || description === "" || name === "") {
+    if (title === "" || number === "" || description === "" || name === "" || selectedImage === null) {
       //TODO: Edit Alert
       console.log("Fields empty");
     } else {
 
       if (location != null) {
         db.collection("Product").add(Data);
+        Upload();
       }
       navigation.replace("Home");
     }
@@ -105,7 +146,12 @@ const AddProduct = () => {
                 onChangeText={(text) => setDescription(text)}
                 style={styles.inputs}
               />
+
               <View style={styles.buttonContainer}>
+                {/* //TODO: FIX Choose button */}
+                <TouchableOpacity TouchableOpacity onPress={openImagePickerAsync} style={[styles.button, { marginBottom: 10 }]}>
+                  <Text style={styles.buttonText}>Pick a photo</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={handleAddProduct} style={styles.button}>
                   <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
@@ -120,7 +166,7 @@ const AddProduct = () => {
           </>
         }
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
