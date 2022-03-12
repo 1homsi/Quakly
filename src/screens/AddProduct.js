@@ -2,7 +2,7 @@ import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity, Platform } from "react-native";
-import { auth, db, storage } from "../../firebase";
+import { auth, db, storage, firebase } from "../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
 import * as ImagePicker from 'expo-image-picker';
@@ -17,6 +17,7 @@ const AddProduct = () => {
   const [description, setDescription] = React.useState("");
   const [selectedImage, setSelectedImage] = React.useState("");
   const [ImageUrl, setImageUrl] = React.useState("");
+  const [uploadLoading, setUploadLoading] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -50,7 +51,12 @@ const AddProduct = () => {
       alert('Permission to access camera roll is required!');
       return;
     }
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [4, 3],
+      quality: 1,
+    });
     if (pickerResult.cancelled === true) {
       return;
     }
@@ -66,20 +72,48 @@ const AddProduct = () => {
     console.log(selectedImage)
   };
 
-  const Upload = () => {
-    storage
-      .ref()
-      .child(selectedImage.name)
-      .put(selectedImage)
-      .then(() => {
-        storage.ref(selectedImage.name).getDownloadURL().then((url) => {
-          setImageUrl(url)
-        })
-      })
+  const onUpload = async () => {
+    setUploadLoading(true);
+    const response = await fetch(selectedImage.uri);
+    const blob = await response.blob();
+    var uploadTask = storage.ref().child(selectedImage.name).put(blob, {
+      contentType: 'image/jpg',
+    });
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED:
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING:
+            console.log('Upload is running');
+            break;
+        }
+      },
+      (error) => {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            break;
+          case 'storage/canceled':
+            break;
+          case 'storage/unknown':
+            break;
+        }
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File available at', downloadURL);
+          setImageUrl(downloadURL);
+          setUploadLoading(false);
+        });
+      }
+    );
   }
 
-  //TODO: Fix Image url not being passed
   const handleAddProduct = () => {
+    onUpload()
     var Data = {
       title: title,
       Name: name || "Anonymous",
@@ -97,11 +131,14 @@ const AddProduct = () => {
       console.log("Fields empty");
     } else {
 
-      if (location != null) {
+      if (location != null && uploadLoading === false) {
         db.collection("Product").add(Data);
-        Upload();
       }
-      navigation.replace("Home");
+
+      //TODO: create a custom state (works for now tho)
+      // if (uploadLoading === false) {
+      //   navigation.replace("Home");
+      // }
     }
   };
 

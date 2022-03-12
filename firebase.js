@@ -22,4 +22,4 @@ const db = firebase.firestore()
 const storage = firebase.storage();
 db.settings({ experimentalForceLongPolling: true });
 
-export { auth, db, storage };
+export { auth, db, storage, firebase };
