@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity, Platform } from "react-native";
 import React, { useEffect } from "react";
 import { db } from "../../firebase";
 import { Icon } from "react-native-elements";
@@ -30,18 +30,21 @@ const PorductView = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Icon
-        style={styles.icon}
-        reverseColor
-        name="home"
-        type="font-awesome"
-        size={40}
-        onPress={() => navigation.replace("Home")}
-      />
+      {
+        Platform.OS === "Ios" ? <Icon
+          style={styles.icon}
+          reverseColor
+          name="home"
+          type="font-awesome"
+          size={40}
+          onPress={() => navigation.replace("Home")}
+        /> : <></>
+      }
+
       <View style={styles.Image}>
         <Image
           style={styles.HeaderImage}
-          source={require("../images/Login.png")}
+          source={{ uri: data.Image }}
         />
       </View>
       <View style={styles.description}>
@@ -105,15 +108,17 @@ const styles = StyleSheet.create({
   HeaderImage: {
     position: "absolute",
     top: 50,
-    width: 500,
-    height: 300,
-    height: 200,
+    width: "60%",
+    height: "60%",
   },
   Image: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
+
   description: {
     flex: 1,
     bottom: 120,

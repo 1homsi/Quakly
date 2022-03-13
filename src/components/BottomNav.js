@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
 import { Icon } from "react-native-elements";
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -75,6 +75,7 @@ const BottomNav = () => {
                     )}
                 </View>
             </View>
+            { }
         </View >
     )
 }
@@ -83,7 +84,7 @@ export default BottomNav
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0.05,
+        flex: Platform.OS === 'ios' ? 0.08 : 0.1,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         position: "absolute",
-        bottom: 0,
+        bottom: Platform.OS === 'ios' ? -5 : 0,
     },
     bottomNavItem: {
         alignItems: "center",
@@ -108,11 +109,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderColor: "white",
         borderWidth: 8,
-        paddingTop: 35,
-        paddingHorizontal: 21,
-        paddingBottom: 35,
+        paddingTop: 17,
+        paddingHorizontal: 20,
+        paddingBottom: 17,
         borderRadius: 100,
         marginBottom: 40,
+        height: 100,
+        width: 100,
     },
     bottomNavItemAddNot: {
         backgroundColor: "#fc5c65",
@@ -121,6 +124,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ff7f73",
     },
     iconPlus: {
+        position: "relative",
         color: "black",
     }
 })

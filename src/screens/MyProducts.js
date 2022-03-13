@@ -8,7 +8,6 @@ import {
   Linking,
 } from "react-native";
 import React from "react";
-import BottomNav from "../components/BottomNav";
 import { db, auth } from '../../firebase'
 import { useNavigation } from '@react-navigation/native'
 import LottieView from "lottie-react-native";
@@ -52,9 +51,7 @@ const MyProducts = () => {
   };
 
   const handleDelete = (item) => {
-    // console.log(item.id)
     db.collection("Product").doc(item.id).delete();
-    //TODO: remove product from state array
     navigation.replace("Home");
   };
 
@@ -80,7 +77,7 @@ const MyProducts = () => {
   );
 
   const renderItem = ({ item }) => (
-    <Item id={item.id} Location={item.Location} Delete={item.id} item={item} />
+    <Item id={item.title} Location={item.Location} Delete={item.id} item={item} />
   );
 
   return (

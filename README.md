@@ -115,6 +115,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
   - [Mohamad Homsi](mailto:homsimohamad4@gmail.com)
   - [Jalal Ghannam](mailto:Jalalghannam.22@gmail.com)
+  - [Mohamad al faki](mailto:mohamadfaki3@gmail.com)
 
 - Project Link: [Quakly](https://github.com/1homsi/Quakly)
 

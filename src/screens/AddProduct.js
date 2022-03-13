@@ -1,7 +1,7 @@
 import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, TextInput, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Platform, Image, Alert } from "react-native";
 import { auth, db, storage, firebase } from "../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
@@ -34,7 +34,6 @@ const AddProduct = () => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        //TODO: Edit Permission not granted (if user does not grant permission ask him again)
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
@@ -42,8 +41,6 @@ const AddProduct = () => {
       setloading(false)
     })();
   }, []);
-
-
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -55,10 +52,17 @@ const AddProduct = () => {
       allowsEditing: true,
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       aspect: [4, 3],
+      base64: true,
       quality: 1,
     });
     if (pickerResult.cancelled === true) {
-      return;
+      const fileSize = pickerResult.base64.length * (3 / 4) - 2;
+      if (fileSize >= 1000000) {
+        Alert.alert("Idk")
+      } else {
+        setFileSizeError(false);
+        return
+      }
     }
     var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
       : pickerResult.uri
@@ -71,6 +75,32 @@ const AddProduct = () => {
     });
     console.log(selectedImage)
   };
+
+  var Data = {
+    title: title,
+    Name: name || "Anonymous",
+    PhoneNumber: number,
+    Description: description,
+    Email: auth.currentUser?.email,
+    Location: location,
+    Favorite: false,
+    ProductTaken: false,
+    Image: ImageUrl
+  };
+
+  var checkToUpload = setInterval(Up, 30);
+
+  function Up() {
+    if (title === "" || number === "" || description === "" || name === "" || selectedImage === null) {
+      return
+    } else {
+      if (location != null && uploadLoading === false && ImageUrl != "") {
+        db.collection("Product").add(Data);
+        navigation.replace("Home");
+        clearInterval(checkToUpload);
+      }
+    }
+  }
 
   const onUpload = async () => {
     setUploadLoading(true);
@@ -112,36 +142,6 @@ const AddProduct = () => {
     );
   }
 
-  const handleAddProduct = () => {
-    onUpload()
-    var Data = {
-      title: title,
-      Name: name || "Anonymous",
-      PhoneNumber: number,
-      Description: description,
-      Email: auth.currentUser?.email,
-      Location: location,
-      Favorite: false,
-      ProductTaken: false,
-      Image: ImageUrl
-    };
-
-    if (title === "" || number === "" || description === "" || name === "" || selectedImage === null) {
-      //TODO: Edit Alert
-      console.log("Fields empty");
-    } else {
-
-      if (location != null && uploadLoading === false) {
-        db.collection("Product").add(Data);
-      }
-
-      //TODO: create a custom state (works for now tho)
-      // if (uploadLoading === false) {
-      //   navigation.replace("Home");
-      // }
-    }
-  };
-
   return (
     <SafeAreaView style={styles.main}>
       <View>
@@ -155,9 +155,12 @@ const AddProduct = () => {
           </>
           :
           <>
-            <View styles={styles.container}>
+            <View>
               <View style={styles.topNav}>
                 <Text style={styles.title}>Share Your Food</Text>
+              </View>
+              <View style={styles.ImageContainer}>
+                <Image source={{ uri: selectedImage.uri }} style={styles.Image} />
               </View>
               <TextInput
                 placeholder="Enter title"
@@ -189,7 +192,7 @@ const AddProduct = () => {
                 <TouchableOpacity TouchableOpacity onPress={openImagePickerAsync} style={[styles.button, { marginBottom: 10 }]}>
                   <Text style={styles.buttonText}>Pick a photo</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleAddProduct} style={styles.button}>
+                <TouchableOpacity onPress={onUpload} style={styles.button}>
                   <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -210,6 +213,10 @@ const AddProduct = () => {
 export default AddProduct;
 
 const styles = StyleSheet.create({
+  Image: {
+    width: 150,
+    height: 150,
+  },
   main: {
     flex: 1,
     backgroundColor: "white",

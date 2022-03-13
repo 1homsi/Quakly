@@ -65,7 +65,7 @@ const HomeScreen = () => {
           style={styles.list}
           data={data}
           renderItem={({ item }) => (
-            <Items id={item.id} title={item.title} dis={item.Description} />
+            <Items id={item.id} title={item.title} dis={item.Description} img={item.Image} />
           )}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -137,4 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginBottom: 40,
   },
+  refresh: {
+
+  }
 });
