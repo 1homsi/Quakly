@@ -67,7 +67,6 @@ const AddProduct = () => {
     var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
       : pickerResult.uri
     const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1)
-    //TODO: Fix Upload image to firebase storage
     setSelectedImage({
       uri: url,
       name: filename,
