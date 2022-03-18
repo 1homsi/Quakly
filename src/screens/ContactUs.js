@@ -9,10 +9,22 @@ import {
 import { Icon } from "react-native-elements";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { auth, db } from "../../firebase";
 
-const AboutUs = () => {
+const ContactUs = () => {
   const navigation = useNavigation();
-  
+  const [message, setMessage] = React.useState("");
+
+  const handleAddMessage = () => {
+    if (message != "") {
+      db.collection("Message").add({
+        User: auth.currentUser?.email,
+        Message: message,
+      });
+      navigation.goBack()
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.title}>Contact Us</Text>
@@ -47,18 +59,15 @@ const AboutUs = () => {
           />
           <Text style={styles.info_text}>XXX-XXX-XXXX</Text>
         </View>
-        <View style={styles.info}>
-          <TextInput placeholder="Name" style={styles.input} />
-          <TextInput placeholder="Email" style={styles.input} />
-        </View>
         <TextInput
           placeholder="Message"
           style={styles.input_field}
           textAlignVertical="top"
-          multiline={true}
+          value={message}
+          onChangeText={(text) => setMessage(text)}
         />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleAddMessage}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -71,7 +80,7 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default ContactUs;
 
 const styles = StyleSheet.create({
   mainCard: {
@@ -91,7 +100,6 @@ const styles = StyleSheet.create({
   title: {
     marginLeft: "auto",
     marginRight: "auto",
-    fontFamily: "Roboto",
     fontSize: 40,
     fontWeight: "bold",
     borderBottomWidth: 3,
@@ -111,7 +119,6 @@ const styles = StyleSheet.create({
   },
   info_text: {
     marginTop: "2%",
-    fontFamily: "Roboto",
     fontSize: 20,
   },
   input: {
@@ -128,7 +135,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "grey",
     marginTop: "5%",
-    height: "30%",
+    height: "40%",
     borderRadius: 5,
     fontSize: 17,
     padding: 15,
@@ -150,7 +157,6 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     marginTop: "5%",
   },
-
   button: {
     backgroundColor: "#fc5c65",
     padding: 15,

@@ -1,32 +1,50 @@
-import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity, Platform } from "react-native";
+import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity, Platform, Linking } from "react-native";
 import React, { useEffect } from "react";
-import { db } from "../../firebase";
+import { db, auth } from "../../firebase";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
 
 const PorductView = ({ route }) => {
-  const { id } = route.params;
+  const { id, IsFav } = route.params;
   const [data, setData] = React.useState([]);
   const navigation = useNavigation();
-
 
   useEffect(() => {
     db.collection("Product")
       .doc(id)
       .get()
       .then((doc) => {
-        console.log(doc.data());
         setData(doc.data());
       });
   }, []);
 
   const handleAdd = () => {
-    db.collection("Product").doc(id).update({
-      "Favorite": true,
-      "ProductTaken": true,
-    })
+    if (auth.currentUser?.email === data.Email) {
+      alert("You can't add your own product");
+    }
+    else {
+      db.collection("Product").doc(id).update({
+        "FavoritedBy": auth.currentUser?.email,
+        "ProductTaken": true,
+      })
+      navigation.replace("Home")
+    }
   }
+
+  const openMaps = (lat, lng) => {
+    const scheme = Platform.select({
+      ios: "maps:0,0?q=",
+      android: "geo:0,0?q=",
+    });
+    const latLng = `${lat},${lng}`;
+    const label = "Custom Label";
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+    Linking.openURL(url);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,19 +92,21 @@ const PorductView = ({ route }) => {
               marginBottom: 5,
             }}
           />
-
-          <Text style={styles.text}>Location</Text>
-          {/* <View
-            style={{
-              borderBottomColor: "lightgrey",
-              borderBottomWidth: 1,
-              marginBottom: 5,
-            }}
-          /> */}
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText} onPress={handleAdd}>Add</Text>
+          <TouchableOpacity style={styles.button} onPress={() => {
+            IsFav ? handleAdd() : openMaps(
+              data.Location.coords.latitude,
+              data.Location.coords.longitude
+            );
+          }}>
+            {
+              IsFav ? <Text style={styles.buttonText} >Add</Text>
+                :
+                <>
+                  <Text style={styles.buttonText}>Open Location</Text>
+                </>
+            }
           </TouchableOpacity>
         </View>
       </View>
@@ -125,8 +145,6 @@ const styles = StyleSheet.create({
     left: 5,
     marginLeft: 7,
     marginRight: 20,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   headTitle: {
     fontSize: 40,
@@ -138,7 +156,6 @@ const styles = StyleSheet.create({
     color: "#003f5c",
   },
   box: {
-    // flex: 1,
     borderColor: "white",
     borderRadius: 10,
     shadowOpacity: 0.2,

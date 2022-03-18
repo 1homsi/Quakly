@@ -11,10 +11,9 @@ import PorductView from './src/screens/PorductView';
 import ResetPassword from './src/screens/ResetPassword';
 import Options from './src/screens/Options';
 import MyProducts from './src/screens/MyProducts';
-import AboutUs from './src/screens/AboutUs';
 import Choosen from './src/screens/Choosen';
 import TermsAndConditions from './src/screens/TermsAndConditions';
-
+import ContactUS from "./src/screens/ContactUs"
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +32,7 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="MyProducts" component={MyProducts} />
           <Stack.Screen options={{ headerShown: false }} name="Option" component={Options} />
           <Stack.Screen options={{ headerShown: false }} name="Terms" component={TermsAndConditions} />
-          <Stack.Screen options={{ headerShown: false }} name="About" component={AboutUs} />
+          <Stack.Screen options={{ headerShown: false }} name="About" component={ContactUS} />
           <Stack.Screen options={{ headerShown: false }} name="Fav" component={Choosen} />
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
           <Stack.Screen options={{ headerShown: false }} name="Register" component={RegisterScreen} />

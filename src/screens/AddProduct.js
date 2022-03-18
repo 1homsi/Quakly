@@ -19,13 +19,13 @@ const AddProduct = () => {
   const [ImageUrl, setImageUrl] = React.useState("");
   const [uploadLoading, setUploadLoading] = React.useState(false);
 
-
   React.useEffect(() => {
     if (!auth.currentUser) {
       navigation.replace("Login");
     } else {
       db.collection("Users").doc(auth.currentUser?.email).get().then((doc) => {
-        setName(doc.data().name);
+        setName(doc.data().Name);
+        console.log(doc.data().Name);
       });
     }
   }, []);
@@ -58,7 +58,7 @@ const AddProduct = () => {
     if (pickerResult.cancelled === true) {
       const fileSize = pickerResult.base64.length * (3 / 4) - 2;
       if (fileSize >= 1000000) {
-        Alert.alert("Idk")
+        Alert.alert("Choose a smaller sized image");
       } else {
         setFileSizeError(false);
         return
@@ -82,7 +82,7 @@ const AddProduct = () => {
     Description: description,
     Email: auth.currentUser?.email,
     Location: location,
-    Favorite: false,
+    FavoritedBy: "",
     ProductTaken: false,
     Image: ImageUrl
   };

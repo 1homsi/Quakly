@@ -67,7 +67,7 @@ const HomeScreen = () => {
           style={styles.list}
           data={data}
           renderItem={({ item }) => (
-            <Items id={item.id} title={item.title} dis={item.Description} img={item.Image} />
+            <Items id={item.id} title={item.title} dis={item.Description} img={item.Image} isNotFav={true} />
           )}
           keyExtractor={(item, index) => index.toString()}
         />

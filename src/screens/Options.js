@@ -20,8 +20,11 @@ export default function Option() {
 
   React.useEffect(() => {
     db.collection("Users").doc(auth.currentUser?.email).get().then((doc) => {
-      setUser(doc.data());
+      setUser(doc.data().Name);
     });
+    return () => {
+      setUser("")
+    }
   }, []);
 
   const navigation = useNavigation();
@@ -76,7 +79,7 @@ export default function Option() {
             <Image style={styles.Image} source={require("../images/Profile.jpg")} />
           </View>
           <View style={styles.Inner}>
-            <Text style={styles.nameSec}>{user.Name}</Text>
+            <Text style={styles.nameSec}>{user}</Text>
             <Text style={styles.emailSec}>{auth.currentUser?.email}</Text>
           </View>
 
@@ -103,7 +106,7 @@ export default function Option() {
           onPress={() => navigation.navigate("About")}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>About Us</Text>
+          <Text style={styles.buttonText}>Contact Us</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign out</Text>

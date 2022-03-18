@@ -8,12 +8,9 @@
     <br />
     <br/>
     <br />
-    <a href="https://github.com/1homsi/Quakly">View Demo</a>
-    ·
     <a href="https://github.com/1homsi/Quakly/issues">Report Bug</a>
     ·
     <a href="https://github.com/1homsi/Quakly/issues">Request Feature</a>
-
   </p>
 </div>
 
@@ -89,22 +86,6 @@ Follow the steps below to get run the project.
    ```
 5. Choose a device to run the app on. [localhost](http://localhost:19002/)
 
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-<!-- ## Roadmap
-
-- [ ] Add Changelog
-- [ ] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-  - [ ] Chinese
-  - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues). -->
-
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
@@ -117,6 +98,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
     - [Email](mailto:homsimohamad4@gmail.com)
   - Jalal Ghannam
     - [Email](mailto:Jalalghannam.22@gmail.com)
+    - [Github](https://github.com/GriffinZaOriginal)
   - Mohamad Al Faki
     - [Email](mailto:mohamadfaki3@gmail.com)
     - [Github](https://github.com/mohamadfaki)

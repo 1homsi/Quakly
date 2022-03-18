@@ -6,7 +6,7 @@ const Items = (props) => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity style={styles.container} onPress={() => {
-            navigation.navigate("ViewProduct", { id: props.id })
+            navigation.navigate("ViewProduct", { id: props.id, IsFav: props.isNotFav })
         }}>
             {
                 props.img ? <Image
