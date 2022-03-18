@@ -17,7 +17,6 @@ const wait = (timeout) => {
 };
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const [data, setData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -35,6 +34,9 @@ const HomeScreen = () => {
 
   React.useEffect(() => {
     fetchAll();
+    return () => {
+      setData();
+    }
   }, []);
 
   const onRefresh = React.useCallback(() => {
