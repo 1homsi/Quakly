@@ -39,23 +39,30 @@ const Choosen = () => {
 
     return (
         <SafeAreaView>
-            <View style={styles.ListView}>
-                <FlatList
-                    refreshControl={
-                        <RefreshControl
-                            style={styles.refresh}
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
+            {
+                data.length > 0 ?
+                    <View style={styles.ListView}>
+                        <FlatList
+                            refreshControl={
+                                <RefreshControl
+                                    style={styles.refresh}
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                            style={styles.list}
+                            data={data}
+                            renderItem={({ item }) => (
+                                <Items id={item.id} title={item.title} dis={item.Description} img={item.Image} isNotFav={false} />
+                            )}
+                            keyExtractor={(item, index) => index.toString()}
                         />
-                    }
-                    style={styles.list}
-                    data={data}
-                    renderItem={({ item }) => (
-                        <Items id={item.id} title={item.title} dis={item.Description} img={item.Image} isNotFav={false} />
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            </View>
+                    </View> :
+                    <View>
+                        <Text>No Choosen products</Text>
+                    </View>
+            }
+
         </SafeAreaView>
     )
 }
