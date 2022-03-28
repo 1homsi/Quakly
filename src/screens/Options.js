@@ -96,18 +96,18 @@ export default function Option() {
         >
           <Text style={styles.buttonText}>View Favorites</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate("Terms")}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Terms and Conditions</Text>
-        </TouchableOpacity>
-        {/* <TouchableOpacity
+        </TouchableOpacity> */}
+        <TouchableOpacity
           onPress={() => navigation.navigate("About")}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Contact Us</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign out</Text>
         </TouchableOpacity>
