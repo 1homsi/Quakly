@@ -109,7 +109,7 @@ const RegisterScreen = () => {
             navigation.replace("Login");
           }}
         >
-          Login
+          Already have an account? Log In!
         </Text>
       </KeyboardAvoidingView>
     </>
@@ -124,19 +124,18 @@ const styles = StyleSheet.create({
   },
   HeaderImage: {
     marginBottom: 50,
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
   },
   head: {
     color: "#003f5c",
     fontWeight: "bold",
     fontSize: 29,
-    marginBottom: 50,
+    marginBottom: 20,
   },
   IntroText: {
     color: "#003f5c",
     fontSize: 16,
-    marginBottom: 30,
   },
   container: {
     flex: 1,
@@ -151,22 +150,22 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#003f5c",
     backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 15,
+    paddingHorizontal: 17,
+    paddingVertical: 13,
+    borderRadius: 12,
     marginTop: 10,
   },
   buttonContainer: {
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 25,
   },
   button: {
     backgroundColor: "#fc5c65",
-    width: "100%",
+    width: "80%",
     padding: 20,
-    borderRadius: 30,
+    borderRadius: 20,
     alignItems: "center",
   },
   buttonText: {
@@ -175,8 +174,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   GoToLogin: {
-    marginTop: 25,
+    marginTop: 20,
     color: "#003f5c",
-    fontSize: 18,
+    fontSize: 15,
   },
 });

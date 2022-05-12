@@ -104,15 +104,13 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   icon: {
-    marginBottom: 25,
+    marginBottom: 30,
   },
-
   HeaderImage: {
     marginBottom: 15,
     width: 200,
     height: 200,
   },
-
   head: {
     color: "#003f5c",
     fontWeight: "bold",
@@ -131,28 +129,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputContainer: {
-    width: "80%",
+    width: "85%"
   },
   input: {
     borderWidth: 1.5,
     borderColor: "#003f5c",
     backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 15,
+    paddingHorizontal: 17,
+    paddingVertical: 13,
+    borderRadius: 12,
     marginTop: 10,
   },
   buttonContainer: {
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 35,
   },
   button: {
     backgroundColor: "#fc5c65",
     width: "100%",
     padding: 20,
-    borderRadius: 30,
+    borderRadius: 20,
     alignItems: "center",
   },
   buttonText: {
