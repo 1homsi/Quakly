@@ -4,17 +4,19 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Text,
+  Image,
   TextInput,
   TouchableOpacity,
   View,
-  Image,
 } from "react-native";
-import { auth } from "../../firebase";
 import { Icon } from "react-native-elements";
+import { auth, db } from "../../../firebase";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [Otherpassword, setOtherPassword] = useState("");
+  const [name, setName] = useState("");
 
   const navigation = useNavigation();
 
@@ -27,14 +29,25 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
-  const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-      })
-      .catch((error) => alert(error.message));
+  const handleSignUp = () => {
+    if (password !== Otherpassword) {
+      alert("Passwords do not match");
+    } else {
+
+      db.collection("Users").doc(email).set({
+        Name: name,
+        Email: email,
+      });
+
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+        })
+        .catch((error) => alert(error.message));
+    }
   };
+
 
   return (
     <>
@@ -47,16 +60,19 @@ const LoginScreen = () => {
           size={35}
           onPress={() => navigation.replace("Home")}
         />
-
         <Image
           style={styles.HeaderImage}
-          source={require("../images/Login.png")}
+          source={require("../../../assets/images/Register.png")}
         />
-        <Text style={styles.head}>Welcome Back!</Text>
-        <Text style={styles.IntroText}>
-          Please Log into your existing account
-        </Text>
+        <Text style={styles.head}>Create Account</Text>
         <View style={styles.inputContainer}>
+          <TextInput
+            placeholderTextColor="#003f5c"
+            placeholder="Name"
+            value={name}
+            onChangeText={(text) => setName(text)}
+            style={styles.input}
+          />
           <TextInput
             placeholderTextColor="#003f5c"
             placeholder="Email"
@@ -72,52 +88,50 @@ const LoginScreen = () => {
             style={styles.input}
             secureTextEntry
           />
+          <TextInput
+            placeholderTextColor="#003f5c"
+            placeholder="Repeat Password"
+            value={Otherpassword}
+            onChangeText={(text) => setOtherPassword(text)}
+            style={styles.input}
+            secureTextEntry
+          />
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleLogin} style={styles.button}>
-            <Text style={styles.buttonText}>Login</Text>
+          <TouchableOpacity onPress={handleSignUp} style={styles.button}>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
         <Text
-          style={styles.NotAUser}
+          style={styles.GoToLogin}
           onPress={() => {
-            navigation.replace("Register");
+            navigation.replace("Login");
           }}
         >
-          Not a user? Register!
-        </Text>
-        <Text
-          style={styles.ForgotPassword}
-          onPress={() => {
-            navigation.replace("ResetPassword");
-          }}
-        >
-          Forgot Password?
+          Login
         </Text>
       </KeyboardAvoidingView>
     </>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   icon: {
     marginBottom: 25,
   },
-
   HeaderImage: {
-    marginBottom: 15,
+    marginBottom: 50,
     width: 200,
     height: 200,
   },
-
   head: {
     color: "#003f5c",
     fontWeight: "bold",
-    fontSize: 25,
-    marginBottom: 30,
+    fontSize: 29,
+    marginBottom: 50,
   },
   IntroText: {
     color: "#003f5c",
@@ -160,13 +174,9 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 17,
   },
-  NotAUser: {
+  GoToLogin: {
     marginTop: 25,
     color: "#003f5c",
-    fontSize: 16,
-  },
-  ForgotPassword: {
-    color: "#003f5c",
-    marginTop: 20,
+    fontSize: 18,
   },
 });

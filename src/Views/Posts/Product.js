@@ -1,11 +1,11 @@
 import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity, Platform, Linking } from "react-native";
 import React, { useEffect } from "react";
-import { db, auth } from "../../firebase";
+import { db, auth } from "../../../firebase";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
 
-const PorductView = ({ route }) => {
+const Product = ({ route }) => {
   const { id, IsFav } = route.params;
   const [data, setData] = React.useState([]);
   const navigation = useNavigation();
@@ -27,10 +27,10 @@ const PorductView = ({ route }) => {
       db.collection("Product").doc(id).update({
         "FavoritedBy": auth.currentUser?.email,
         "ProductTaken": true,
-      })
-      navigation.replace("Home")
+      });
+      navigation.replace("Home");
     }
-  }
+  };
 
   const openMaps = (lat, lng) => {
     const scheme = Platform.select({
@@ -114,7 +114,7 @@ const PorductView = ({ route }) => {
   );
 };
 
-export default PorductView;
+export default Product;
 
 const styles = StyleSheet.create({
   icon: {

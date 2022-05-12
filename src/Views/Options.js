@@ -23,8 +23,8 @@ export default function Option() {
       setUser(doc.data().Name);
     });
     return () => {
-      setUser("")
-    }
+      setUser("");
+    };
   }, []);
 
   const navigation = useNavigation();
@@ -76,7 +76,7 @@ export default function Option() {
       <View style={styles.container}>
         <View style={styles.UserInfo}>
           <View style={styles.outerImage}>
-            <Image style={styles.Image} source={require("../images/Profile.jpg")} />
+            <Image style={styles.Image} source={require("../../assets/images/Profile.jpg")} />
           </View>
           <View style={styles.Inner}>
             <Text style={styles.nameSec}>{user}</Text>

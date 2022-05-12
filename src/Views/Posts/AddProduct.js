@@ -2,7 +2,7 @@ import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, TextInput, TouchableOpacity, Platform, Image, Alert } from "react-native";
-import { auth, db, storage, firebase } from "../../firebase";
+import { auth, db, storage, firebase } from "../../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
 import * as ImagePicker from 'expo-image-picker';
@@ -38,7 +38,7 @@ const AddProduct = () => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      setloading(false)
+      setloading(false);
     })();
   }, []);
 
@@ -61,18 +61,18 @@ const AddProduct = () => {
         Alert.alert("Choose a smaller sized image");
       } else {
         setFileSizeError(false);
-        return
+        return;
       }
     }
     var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
-      : pickerResult.uri
-    const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1)
+      : pickerResult.uri;
+    const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1);
     setSelectedImage({
       uri: url,
       name: filename,
       type: 'image/jpg',
     });
-    console.log(selectedImage)
+    console.log(selectedImage);
   };
 
   var Data = {
@@ -91,7 +91,7 @@ const AddProduct = () => {
 
   function Up() {
     if (title === "" || number === "" || description === "" || name === "" || selectedImage === null) {
-      return
+      return;
     } else {
       if (location != null && uploadLoading === false && ImageUrl != "") {
         db.collection("Product").add(Data);
@@ -139,7 +139,7 @@ const AddProduct = () => {
         });
       }
     );
-  }
+  };
 
   return (
     <SafeAreaView style={styles.main}>
@@ -147,7 +147,7 @@ const AddProduct = () => {
         {loading ?
           <>
             <LottieView
-              source={require("../../assets/88404-loading-bubbles.json")}
+              source={require("../../../assets/88404-loading-bubbles.json")}
               style={styles.animation}
               autoPlay
             />

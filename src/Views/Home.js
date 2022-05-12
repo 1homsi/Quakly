@@ -16,7 +16,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const HomeScreen = () => {
+const Home = () => {
   const [data, setData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -36,7 +36,7 @@ const HomeScreen = () => {
     fetchAll();
     return () => {
       setData();
-    }
+    };
   }, []);
 
   const onRefresh = React.useCallback(() => {
@@ -77,7 +77,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;
 
 const styles = StyleSheet.create({
   HeadTitlte: {

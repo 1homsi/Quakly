@@ -8,8 +8,8 @@ import {
   Linking,
 } from "react-native";
 import React from "react";
-import { db, auth } from '../../firebase'
-import { useNavigation } from '@react-navigation/native'
+import { db, auth } from '../../../firebase';
+import { useNavigation } from '@react-navigation/native';
 import LottieView from "lottie-react-native";
 
 const MyProducts = () => {
@@ -85,7 +85,7 @@ const MyProducts = () => {
       {loading ? (
         <>
           <LottieView
-            source={require("../../assets/88404-loading-bubbles.json")}
+            source={require("../../../assets/88404-loading-bubbles.json")}
             style={styles.animation}
             autoPlay
           />

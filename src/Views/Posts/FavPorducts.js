@@ -1,13 +1,13 @@
-import { StyleSheet, SafeAreaView, Text, View, FlatList, RefreshControl } from 'react-native'
-import React from 'react'
-import Items from '../components/Items';
-import { auth, db } from '../../firebase';
+import { StyleSheet, SafeAreaView, Text, View, FlatList, RefreshControl } from 'react-native';
+import React from 'react';
+import Items from '../../components/Items';
+import { auth, db } from '../../../firebase';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const Choosen = () => {
+const FavProducts = () => {
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState([]);
 
@@ -27,7 +27,7 @@ const Choosen = () => {
         fetchAll();
         return () => {
             setData();
-        }
+        };
     }, []);
 
     const onRefresh = React.useCallback(() => {
@@ -64,9 +64,9 @@ const Choosen = () => {
             }
 
         </SafeAreaView>
-    )
-}
+    );
+};
 
-export default Choosen
+export default FavProducts;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
