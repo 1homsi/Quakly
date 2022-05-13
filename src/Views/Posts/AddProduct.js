@@ -12,7 +12,6 @@ const AddProduct = () => {
   const [location, setLocation] = React.useState(null);
   const [loading, setloading] = React.useState(true);
   const [title, setTitle] = React.useState("");
-  const [name, setName] = React.useState("");
   const [number, setNumber] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [selectedImage, setSelectedImage] = React.useState("");
@@ -22,11 +21,6 @@ const AddProduct = () => {
   React.useEffect(() => {
     if (!auth.currentUser) {
       navigation.replace("Login");
-    } else {
-      db.collection("Users").doc(auth.currentUser?.email).get().then((doc) => {
-        setName(doc.data().Name);
-        console.log(doc.data().Name);
-      });
     }
   }, []);
 
@@ -55,7 +49,7 @@ const AddProduct = () => {
       base64: true,
       quality: 1,
     });
-    if (pickerResult.cancelled === true) {
+    if (pickerResult.cancelled !== true) {
       const fileSize = pickerResult.base64.length * (3 / 4) - 2;
       if (fileSize >= 1000000) {
         Alert.alert("Choose a smaller sized image");
@@ -63,21 +57,22 @@ const AddProduct = () => {
         setFileSizeError(false);
         return;
       }
+      var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
+        : pickerResult.uri;
+      const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1);
+      setSelectedImage({
+        uri: url,
+        name: filename,
+        type: 'image/jpg',
+      });
+      return;
     }
-    var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
-      : pickerResult.uri;
-    const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1);
-    setSelectedImage({
-      uri: url,
-      name: filename,
-      type: 'image/jpg',
-    });
-    console.log(selectedImage);
+    return;
   };
 
   var Data = {
     title: title,
-    Name: name || "Anonymous",
+    Name: auth.currentUser?.displayName,
     PhoneNumber: number,
     Description: description,
     Email: auth.currentUser?.email,
@@ -90,7 +85,7 @@ const AddProduct = () => {
   var checkToUpload = setInterval(Up, 30);
 
   function Up() {
-    if (title === "" || number === "" || description === "" || name === "" || selectedImage === null) {
+    if (title === "" || number === "" || description === "" || selectedImage === null) {
       return;
     } else {
       if (location != null && uploadLoading === false && ImageUrl != "") {
@@ -187,7 +182,6 @@ const AddProduct = () => {
               />
 
               <View style={styles.buttonContainer}>
-                {/* //TODO: FIX Choose button */}
                 <TouchableOpacity TouchableOpacity onPress={openImagePickerAsync} style={[styles.button, { marginBottom: 10 }]}>
                   <Text style={styles.buttonText}>Pick a photo</Text>
                 </TouchableOpacity>

@@ -15,18 +15,6 @@ import LottieView from "lottie-react-native";
 
 
 export default function Option() {
-
-  const [user, setUser] = React.useState([]);
-
-  React.useEffect(() => {
-    db.collection("Users").doc(auth.currentUser?.email).get().then((doc) => {
-      setUser(doc.data().Name);
-    });
-    return () => {
-      setUser("");
-    };
-  }, []);
-
   const navigation = useNavigation();
 
   const handleSignOut = () => {
@@ -79,7 +67,7 @@ export default function Option() {
             <Image style={styles.Image} source={require("../../assets/images/Profile.jpg")} />
           </View>
           <View style={styles.Inner}>
-            <Text style={styles.nameSec}>{user}</Text>
+            <Text style={styles.nameSec}>{auth.currentUser?.displayName}</Text>
             <Text style={styles.emailSec}>{auth.currentUser?.email}</Text>
           </View>
 

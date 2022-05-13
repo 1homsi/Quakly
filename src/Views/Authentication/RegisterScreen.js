@@ -43,6 +43,9 @@ const RegisterScreen = () => {
         .createUserWithEmailAndPassword(email, password)
         .then((userCredentials) => {
           const user = userCredentials.user;
+          user.updateProfile({
+            displayName: name,
+          });
         })
         .catch((error) => alert(error.message));
     }

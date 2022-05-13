@@ -28,6 +28,10 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   // Firebase sets some timeers for a long period, which will trigger some warnings. Let's turn that off for this example
   LogBox.ignoreLogs(['Setting a timer']);
+  LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core']); //Cause by some packages still using it
+  LogBox.ignoreLogs([
+    "exported from 'deprecated-react-native-prop-types'.",
+  ]); //Warning for deprecated prop types caused by expo 45
 
   React.useEffect(() => {
     //The following function will be called when the app is opened.
