@@ -1,4 +1,7 @@
-import * as firebase from "firebase";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import 'firebase/compat/storage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC7ibM_dWnupDYpIbTX2c0lfYAXZrpTH7k",
@@ -14,12 +17,12 @@ let app;
 if (firebase.apps.length === 0) {
   app = firebase.initializeApp(firebaseConfig);
 } else {
-  app = firebase.app()
+  app = firebase.app();
 }
 
-const auth = firebase.auth()
-const db = firebase.firestore()
+const auth = firebase.auth();
+const db = firebase.firestore();
 const storage = firebase.storage();
-db.settings({ experimentalForceLongPolling: true });
+db.settings({ experimentalForceLongPolling: true, merge: true });
 
 export { auth, db, storage, firebase };
