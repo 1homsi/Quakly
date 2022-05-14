@@ -8,11 +8,9 @@ import {
 } from "react-native";
 import { Icon } from "react-native-elements";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { auth, db } from "../../firebase";
 
-const ContactUs = () => {
-  const navigation = useNavigation();
+const ContactUs = ({ navigation }) => {
   const [message, setMessage] = React.useState("");
 
   const handleAddMessage = () => {
@@ -21,9 +19,9 @@ const ContactUs = () => {
         User: auth.currentUser?.email,
         Message: message,
       });
-      navigation.goBack()
+      navigation.goBack();
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>

@@ -1,20 +1,18 @@
-import { Text, StyleSheet, TouchableOpacity, View, Image } from 'react-native'
-import React from 'react'
+import { Text, StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 const Items = (props) => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity style={styles.container} onPress={() => {
-            navigation.navigate("ViewProduct", { id: props.id, IsFav: props.isNotFav })
+            navigation.navigate("ViewProduct", { id: props.id, IsFav: props.isNotFav });
         }}>
             {
-                props.img ? <Image
+                props?.img ? <Image
                     style={styles.image}
                     source={{ uri: `${props.img}` }} /> :
-                    <>
-                        {/* TODO:Do something */}
-                    </>
+                    <></>
             }
             <View style={styles.innerContainer}>
                 <Text style={styles.title}>{
@@ -26,10 +24,10 @@ const Items = (props) => {
                 }</Text>
             </View>
         </TouchableOpacity >
-    )
-}
+    );
+};
 
-export default Items
+export default Items;
 
 const styles = StyleSheet.create({
     des: {
@@ -37,13 +35,13 @@ const styles = StyleSheet.create({
     },
     image: {
         borderRadius: 10,
-        width: 85,
-        height: 85
+        width: 120,
+        height: 120
     },
     container: {
         backgroundColor: '#dba0a3',
-        width: '85%',
-        height: 115,
+        width: '100%',
+        height: 150,
         padding: 15,
         borderRadius: 10,
         marginTop: 25,
@@ -57,4 +55,4 @@ const styles = StyleSheet.create({
     innerContainer: {
         marginLeft: 15,
     }
-})  
+});  

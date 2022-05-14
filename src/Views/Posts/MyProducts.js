@@ -9,20 +9,16 @@ import {
 } from "react-native";
 import React from "react";
 import { db, auth } from '../../../firebase';
-import { useNavigation } from '@react-navigation/native';
 import LottieView from "lottie-react-native";
 
-const MyProducts = () => {
-  const navigation = useNavigation();
+const MyProducts = ({ navigation }) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    if (!auth.currentUser) {
-      navigation.replace("Login");
-    }
-
-    if (auth.currentUser) {
+    !auth.currentUser ?
+      navigation.replace("Login")
+      :
       db.collection("Product")
         .where("Email", "==", auth.currentUser?.email)
         .get()
@@ -33,7 +29,10 @@ const MyProducts = () => {
             setData((e) => [...e, Userdata]);
           });
         });
-    }
+
+    return () => {
+      setData({});
+    };
   }, []);
 
   const openMaps = (lat, lng) => {
@@ -42,7 +41,7 @@ const MyProducts = () => {
       android: "geo:0,0?q=",
     });
     const latLng = `${lat},${lng}`;
-    const label = "Custom Label";
+    const label = "Location";
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`,
@@ -51,8 +50,11 @@ const MyProducts = () => {
   };
 
   const handleDelete = (item) => {
-    db.collection("Product").doc(item.id).delete();
-    navigation.replace("Home");
+    db.collection("Product").doc(item.id).delete().then(() => {
+      setData((e) => e.filter((e) => e.id !== item.id));
+    }).catch((error) => {
+      alert("Could not delete product");
+    });
   };
 
   const Item = (props) => (
@@ -62,8 +64,8 @@ const MyProducts = () => {
         style={styles.location}
         onPress={() => {
           openMaps(
-            props.Location.coords.latitude,
-            props.Location.coords.longitude
+            props.Location.latitude,
+            props.Location.longitude
           );
         }}
       >
@@ -113,7 +115,6 @@ const MyProducts = () => {
           )}
         </>
       )}
-      {/* <BottomNav /> */}
     </SafeAreaView>
   );
 };
@@ -145,9 +146,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     flex: 1,
-    // marginTop: 50,
-
-    // marginLeft: "15%",
   },
   list: {
     width: "100%",

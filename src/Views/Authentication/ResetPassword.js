@@ -6,18 +6,14 @@ import {
   StyleSheet,
 } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../firebase";
 
-const ResetPassword = () => {
+const ResetPassword = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
-  const navigation = useNavigation();
 
   const handleReset = () => {
-    auth.sendPasswordResetEmail(email).catch((error) => {
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
+    auth.sendPasswordResetEmail(email).catch(() => {
       alert("Error please try again later");
     });
     navigation.navigate("Login");

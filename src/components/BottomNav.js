@@ -1,7 +1,7 @@
-import { StyleSheet, View, TouchableOpacity, Platform } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, TouchableOpacity, Platform } from 'react-native';
+import React from 'react';
 import { Icon } from "react-native-elements";
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { auth } from '../../firebase';
 
 const BottomNav = () => {
@@ -23,7 +23,7 @@ const BottomNav = () => {
                         size={35}
                         onPress={() => {
                             if (route.name != "Home") {
-                                navigation.replace("Home")
+                                navigation.replace("Home");
                             }
                         }}
                     />
@@ -77,10 +77,10 @@ const BottomNav = () => {
             </View>
             { }
         </View >
-    )
-}
+    );
+};
 
-export default BottomNav
+export default BottomNav;
 
 const styles = StyleSheet.create({
     container: {
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         position: "absolute",
-        bottom: Platform.OS === 'ios' ? -5 : 0,
+        bottom: Platform.OS === 'ios' ? -5 : 5,
     },
     bottomNavItem: {
         alignItems: "center",
@@ -127,4 +127,4 @@ const styles = StyleSheet.create({
         position: "relative",
         color: "black",
     }
-})
+});

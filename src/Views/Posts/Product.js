@@ -2,13 +2,10 @@ import { SafeAreaView, Text, Image, StyleSheet, View, TouchableOpacity, Platform
 import React, { useEffect } from "react";
 import { db, auth } from "../../../firebase";
 import { Icon } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 
-
-const Product = ({ route }) => {
+const Product = ({ route, navigation }) => {
   const { id, IsFav } = route.params;
   const [data, setData] = React.useState([]);
-  const navigation = useNavigation();
 
   useEffect(() => {
     db.collection("Product")
@@ -38,7 +35,7 @@ const Product = ({ route }) => {
       android: "geo:0,0?q=",
     });
     const latLng = `${lat},${lng}`;
-    const label = "Custom Label";
+    const label = "Location";
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`,
@@ -96,8 +93,8 @@ const Product = ({ route }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => {
             IsFav ? handleAdd() : openMaps(
-              data.Location.coords.latitude,
-              data.Location.coords.longitude
+              data.Location.latitude,
+              data.Location.longitude
             );
           }}>
             {

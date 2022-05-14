@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogBox } from 'react-native';
 
+
 //Screen Imports
 import Home from './src/Home';
 import LoginScreen from './src/Views/Authentication/LoginScreen';
@@ -50,7 +51,6 @@ export default function App() {
     }
     )();
   }, []);
-
 
   return (
     <>

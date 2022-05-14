@@ -9,13 +9,11 @@ import {
   Image
 } from "react-native";
 import { auth, db } from "../../firebase";
-import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/BottomNav";
 import LottieView from "lottie-react-native";
 
 
-export default function Option() {
-  const navigation = useNavigation();
+const Option = ({ navigation }) => {
 
   const handleSignOut = () => {
     auth
@@ -84,12 +82,6 @@ export default function Option() {
         >
           <Text style={styles.buttonText}>View Favorites</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={() => navigation.navigate("Terms")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Terms and Conditions</Text>
-        </TouchableOpacity> */}
         <TouchableOpacity
           onPress={() => navigation.navigate("About")}
           style={styles.button}
@@ -106,7 +98,9 @@ export default function Option() {
       <BottomNav />
     </SafeAreaView>
   );
-}
+};
+
+export default Option;
 
 const styles = StyleSheet.create({
   animation: {

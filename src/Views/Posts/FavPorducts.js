@@ -22,7 +22,6 @@ const FavProducts = () => {
                 });
             });
     };
-
     React.useEffect(() => {
         fetchAll();
         return () => {

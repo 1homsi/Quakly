@@ -1,14 +1,12 @@
 import { SafeAreaView, Text } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, TextInput, TouchableOpacity, Platform, Image, Alert } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Platform, Image, Switch } from "react-native";
 import { auth, db, storage, firebase } from "../../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
 import * as ImagePicker from 'expo-image-picker';
 
-const AddProduct = () => {
-  const navigation = useNavigation();
+const AddProduct = ({ navigation }) => {
   const [location, setLocation] = React.useState(null);
   const [loading, setloading] = React.useState(true);
   const [title, setTitle] = React.useState("");
@@ -17,6 +15,7 @@ const AddProduct = () => {
   const [selectedImage, setSelectedImage] = React.useState("");
   const [ImageUrl, setImageUrl] = React.useState("");
   const [uploadLoading, setUploadLoading] = React.useState(false);
+  const [switchValue, setSwitchValue] = React.useState(false);
 
   React.useEffect(() => {
     if (!auth.currentUser) {
@@ -44,19 +43,15 @@ const AddProduct = () => {
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       aspect: [4, 3],
       base64: true,
       quality: 1,
     });
-    if (pickerResult.cancelled !== true) {
-      const fileSize = pickerResult.base64.length * (3 / 4) - 2;
-      if (fileSize >= 1000000) {
-        Alert.alert("Choose a smaller sized image");
-      } else {
-        setFileSizeError(false);
-        return;
-      }
+    const fileSize = pickerResult.base64.length * (3 / 4) - 2;
+    if (fileSize >= 1000000) {
+      alert("Choose a smaller sized image");
+    } else {
       var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
         : pickerResult.uri;
       const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1);
@@ -70,18 +65,6 @@ const AddProduct = () => {
     return;
   };
 
-  var Data = {
-    title: title,
-    Name: auth.currentUser?.displayName,
-    PhoneNumber: number,
-    Description: description,
-    Email: auth.currentUser?.email,
-    Location: location,
-    FavoritedBy: "",
-    ProductTaken: false,
-    Image: ImageUrl
-  };
-
   var checkToUpload = setInterval(Up, 30);
 
   function Up() {
@@ -89,7 +72,18 @@ const AddProduct = () => {
       return;
     } else {
       if (location != null && uploadLoading === false && ImageUrl != "") {
-        db.collection("Product").add(Data);
+        db.collection("Product").add({
+          title: title,
+          Name: auth.currentUser?.displayName,
+          PhoneNumber: number,
+          Description: description,
+          Email: auth.currentUser?.email,
+          Location: new firebase.firestore.GeoPoint(location?.coords.latitude, location?.coords.longitude),
+          FavoritedBy: "",
+          ProductTaken: false,
+          Image: ImageUrl,
+          isMedicine: switchValue,
+        });
         navigation.replace("Home");
         clearInterval(checkToUpload);
       }
@@ -139,7 +133,7 @@ const AddProduct = () => {
   return (
     <SafeAreaView style={styles.main}>
       <View>
-        {loading ?
+        {!location ?
           <>
             <LottieView
               source={require("../../../assets/88404-loading-bubbles.json")}
@@ -180,7 +174,15 @@ const AddProduct = () => {
                 onChangeText={(text) => setDescription(text)}
                 style={styles.inputs}
               />
-
+              <Switch
+                trackColor={{ false: "#767577", true: "red" }}
+                thumbColor={switchValue ? "red" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={(value) => {
+                  setSwitchValue(value);
+                }}
+                value={switchValue}
+              />
               <View style={styles.buttonContainer}>
                 <TouchableOpacity TouchableOpacity onPress={openImagePickerAsync} style={[styles.button, { marginBottom: 10 }]}>
                   <Text style={styles.buttonText}>Pick a photo</Text>

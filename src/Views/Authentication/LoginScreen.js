@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -12,11 +11,10 @@ import {
 import { Icon } from "react-native-elements";
 import { auth } from "../../../firebase";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
