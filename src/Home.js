@@ -8,9 +8,9 @@ import {
   View,
   FlatList,
 } from "react-native";
-import Items from "../components/Items";
-import { db } from "../../firebase";
-import BottomNav from "../components/BottomNav";
+import Items from "./components/Items";
+import { db } from "../firebase";
+import BottomNav from "./components/BottomNav";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
