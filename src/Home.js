@@ -63,22 +63,20 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.Top}>
-        <View style={styles.TopContainer}>
-          <Text placeholder="Test" style={styles.HeadTitlte}>
-            Quakly
-          </Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "red" }}
-            thumbColor={isEnabled ? "red" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={(value) => {
-              setIsEnabled(value);
-              setData([]);
-              fetchAll();
-            }}
-            value={isEnabled}
-          />
-        </View>
+        <Text placeholder="Test" style={styles.HeadTitlte}>
+          Quakly
+        </Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "red" }}
+          thumbColor={isEnabled ? "red" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={(value) => {
+            setIsEnabled(value);
+            setData([]);
+            fetchAll();
+          }}
+          value={isEnabled}
+        />
       </View>
       <View style={styles.searchBarContainer}>
         <TextInput
@@ -113,11 +111,6 @@ const Home = ({ navigation }) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  TopContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   searchBarContainer: {
     width: "100%",
     height: 50,
@@ -140,7 +133,7 @@ const styles = StyleSheet.create({
   Top: {
     marginTop: 20,
     flexDirection: "row",
-    textAlign: "center",
+    justifyContent: "space-between",
     marginBottom: 12,
     marginTop: 40,
     paddingBottom: 10,
