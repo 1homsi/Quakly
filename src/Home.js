@@ -17,7 +17,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const [data, setData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [search, setSearch] = React.useState("");
@@ -67,6 +67,7 @@ const Home = ({ navigation }) => {
           Quakly
         </Text>
         <Switch
+          style={styles.Switch}
           trackColor={{ false: "#767577", true: "red" }}
           thumbColor={isEnabled ? "red" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
@@ -111,6 +112,11 @@ const Home = ({ navigation }) => {
 export default Home;
 
 const styles = StyleSheet.create({
+  Switch: {
+    position: "absolute",
+    left: 160,
+    top: 7,
+  },
   searchBarContainer: {
     width: "100%",
     height: 50,
@@ -131,13 +137,8 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   Top: {
-    marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    marginTop: "15%",
     marginBottom: 12,
-    marginTop: 40,
-    paddingBottom: 10,
-    paddingTop: 10,
   },
   ListView: {
     width: "100%",

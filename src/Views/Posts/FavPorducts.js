@@ -58,7 +58,7 @@ const FavProducts = () => {
                         />
                     </View> :
                     <View>
-                        <Text>No Choosen products</Text>
+                        <Text style={styles.Text}>No Choosen products</Text>
                     </View>
             }
 
@@ -68,4 +68,12 @@ const FavProducts = () => {
 
 export default FavProducts;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    Text: {
+        textAlign: 'center',
+        marginTop: '50%',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#000',
+    }
+});

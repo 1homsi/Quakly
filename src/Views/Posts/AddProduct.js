@@ -5,17 +5,18 @@ import { auth, db, storage, firebase } from "../../../firebase";
 import * as Location from 'expo-location';
 import LottieView from "lottie-react-native";
 import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from "react-redux";
+import { PostProduct } from "../../redux/actions/postAction";
 
 const AddProduct = ({ navigation }) => {
   const [location, setLocation] = React.useState(null);
-  const [loading, setloading] = React.useState(true);
   const [title, setTitle] = React.useState("");
   const [number, setNumber] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [selectedImage, setSelectedImage] = React.useState("");
-  const [ImageUrl, setImageUrl] = React.useState("");
-  const [uploadLoading, setUploadLoading] = React.useState(false);
   const [switchValue, setSwitchValue] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (!auth.currentUser) {
@@ -31,7 +32,6 @@ const AddProduct = ({ navigation }) => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      setloading(false);
     })();
   }, []);
 
@@ -65,70 +65,25 @@ const AddProduct = ({ navigation }) => {
     return;
   };
 
-  var checkToUpload = setInterval(Up, 30);
-
-  function Up() {
+  function handleUpload() {
     if (title === "" || number === "" || description === "" || selectedImage === null) {
+      alert("Fill all fields");
       return;
     } else {
-      if (location != null && uploadLoading === false && ImageUrl != "") {
-        db.collection("Product").add({
+      if (location != null) {
+        dispatch(PostProduct(selectedImage, {
           title: title,
           Name: auth.currentUser?.displayName,
           PhoneNumber: number,
           Description: description,
           Email: auth.currentUser?.email,
           Location: new firebase.firestore.GeoPoint(location?.coords.latitude, location?.coords.longitude),
-          FavoritedBy: "",
-          ProductTaken: false,
-          Image: ImageUrl,
-          isMedicine: switchValue,
-        });
+          Switch: switchValue,
+        }));
         navigation.replace("Home");
-        clearInterval(checkToUpload);
       }
     }
   }
-
-  const onUpload = async () => {
-    setUploadLoading(true);
-    const response = await fetch(selectedImage.uri);
-    const blob = await response.blob();
-    var uploadTask = storage.ref().child(selectedImage.name).put(blob, {
-      contentType: 'image/jpg',
-    });
-    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      (snapshot) => {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED:
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING:
-            console.log('Upload is running');
-            break;
-        }
-      },
-      (error) => {
-        switch (error.code) {
-          case 'storage/unauthorized':
-            break;
-          case 'storage/canceled':
-            break;
-          case 'storage/unknown':
-            break;
-        }
-      },
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log('File available at', downloadURL);
-          setImageUrl(downloadURL);
-          setUploadLoading(false);
-        });
-      }
-    );
-  };
 
   return (
     <SafeAreaView style={styles.main}>
@@ -187,7 +142,7 @@ const AddProduct = ({ navigation }) => {
                 <TouchableOpacity TouchableOpacity onPress={openImagePickerAsync} style={[styles.button, { marginBottom: 10 }]}>
                   <Text style={styles.buttonText}>Pick a photo</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onUpload} style={styles.button}>
+                <TouchableOpacity onPress={handleUpload} style={styles.button}>
                   <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
                 <TouchableOpacity

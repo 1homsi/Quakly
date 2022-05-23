@@ -74,7 +74,6 @@ const MyProducts = ({ navigation }) => {
       <Text style={styles.delete} onPress={() => handleDelete(props.item)}>
         Delete item
       </Text>
-      <Text style={styles.edit}>Edit Product</Text>
     </View>
   );
 

@@ -6,6 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogBox } from 'react-native';
 
+//Redux Imports
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
 //Screen Imports
 import Home from './src/Home';
@@ -54,26 +57,28 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName='Home'
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="AddProduct" component={AddProduct} />
-          <Stack.Screen name="ViewProduct" component={Product} />
-          <Stack.Screen name="ResetPassword" component={ResetPassword} />
-          <Stack.Screen name="MyProducts" component={MyProducts} />
-          <Stack.Screen name="Option" component={Options} />
-          <Stack.Screen name="Terms" component={TermsAndConditions} />
-          <Stack.Screen name="About" component={ContactUS} />
-          <Stack.Screen name="Fav" component={FavProducts} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <StatusBar style="Dark" />
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName='Home'
+            screenOptions={{
+              headerShown: false,
+            }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="AddProduct" component={AddProduct} />
+            <Stack.Screen name="ViewProduct" component={Product} />
+            <Stack.Screen name="ResetPassword" component={ResetPassword} />
+            <Stack.Screen name="MyProducts" component={MyProducts} />
+            <Stack.Screen name="Option" component={Options} />
+            <Stack.Screen name="Terms" component={TermsAndConditions} />
+            <Stack.Screen name="About" component={ContactUS} />
+            <Stack.Screen name="Fav" component={FavProducts} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+      <StatusBar style="auto" />
     </>
   );
 }
