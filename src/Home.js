@@ -68,8 +68,8 @@ const Home = () => {
         </Text>
         <Switch
           style={styles.Switch}
-          trackColor={{ false: "#767577", true: "red" }}
-          thumbColor={isEnabled ? "red" : "#f4f3f4"}
+          trackColor={{ false: "#767577", true: "#fc5c65" }}
+          thumbColor={isEnabled ? "#fc5c65" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
           onValueChange={(value) => {
             setIsEnabled(value);
@@ -114,7 +114,7 @@ export default Home;
 const styles = StyleSheet.create({
   Switch: {
     position: "absolute",
-    left: 160,
+    left: "82%",
     top: 7,
   },
   searchBarContainer: {
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   searchBar: {
-    width: "80%",
+    width: "90%",
     borderRadius: 10,
     backgroundColor: "#fff",
     padding: 10,
@@ -135,10 +135,15 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "800",
     color: "#000",
+    left: 0,
   },
   Top: {
-    marginTop: "15%",
-    marginBottom: 12,
+    marginTop: "10%",
+    marginBottom: "5%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: "5%",
+    // width: "80%",
   },
   ListView: {
     width: "100%",
@@ -152,8 +157,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   bottomNav: {
     flexDirection: "row",

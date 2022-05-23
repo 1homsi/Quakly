@@ -89,10 +89,10 @@ const Option = ({ navigation }) => {
           <Text style={styles.buttonText}>Contact Us</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-          <Text style={styles.buttonText}>Sign out</Text>
+          <Text style={styles.buttonTextRed}>Sign out</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleDeleteUser} style={styles.buttonOutline}>
-          <Text style={styles.buttonText}>Delete Account</Text>
+          <Text style={styles.buttonTextRed}>Delete Account</Text>
         </TouchableOpacity>
       </View>
       <BottomNav />
@@ -155,29 +155,50 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   button: {
-    backgroundColor: "#fc5c65",
-    padding: 15,
+    // backgroundColor: "#fc5c65",
+    padding: 10,
     borderRadius: 30,
-    alignItems: "center",
-    width: "80%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-  },
+    // alignItems: "center",
+    width: "100%",
+    // justifyContent: "center",
+    // alignItems: "center",
+    marginTop: 10,
+    // borderBottomWidth: 1,
+    // borderColor: "gray",
+    marginBottom: 10,
+    },
   buttonOutline: {
-    backgroundColor: "gray",
-    padding: 15,
+    // backgroundColor: "gray",
+    // padding: 15,
+    // borderRadius: 30,
+    // alignItems: "center",
+    // width: "60%",
+    // justifyContent: "center",
+    // alignItems: "center",
+    // marginTop: 20,
+    // backgroundColor: "#fc5c65",
+    padding: 10,
     borderRadius: 30,
-    alignItems: "center",
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
+    // alignItems: "center",
+    width: "100%",
+    // justifyContent: "center",
+    // alignItems: "center",
+    marginTop: 10,
+    // borderBottomWidth: 1,
+    // borderColor: "gray",
+    marginBottom: 10,
   },
   buttonText: {
-    color: "white",
+    color: "#000",
     fontWeight: "700",
     fontSize: 17,
+    marginLeft: 10,
+  },
+  buttonTextRed: {
+    color: "#fc5c65",
+    fontWeight: "700",
+    fontSize: 17,
+    marginLeft: 10,
   },
   Image: {
     width: 80,
