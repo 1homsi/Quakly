@@ -6,15 +6,13 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  Image
+  Image,
 } from "react-native";
 import { auth, db } from "../../firebase";
 import BottomNav from "../components/BottomNav";
 import LottieView from "lottie-react-native";
 
-
 const Option = ({ navigation }) => {
-
   const handleSignOut = () => {
     auth
       .signOut()
@@ -62,38 +60,59 @@ const Option = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.UserInfo}>
           <View style={styles.outerImage}>
-            <Image style={styles.Image} source={require("../../assets/images/Profile.jpg")} />
+            <Image
+              style={styles.Image}
+              source={require("../../assets/images/Profile.jpg")}
+            />
           </View>
           <View style={styles.Inner}>
             <Text style={styles.nameSec}>{auth.currentUser?.displayName}</Text>
             <Text style={styles.emailSec}>{auth.currentUser?.email}</Text>
           </View>
-
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MyProducts")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Posted Products</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Fav")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>View Favorites</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("About")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Contact Us</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-          <Text style={styles.buttonTextRed}>Sign out</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleDeleteUser} style={styles.buttonOutline}>
-          <Text style={styles.buttonTextRed}>Delete Account</Text>
-        </TouchableOpacity>
+        <View styles={styles.section1}>
+          <View style={styles.option1}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("MyProducts")}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Posted Products</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.option2}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Fav")}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>View Favorites</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View styles={styles.section2}>
+          <View style={styles.option3}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("About")}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Contact Us</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.section3}>
+          <View style={styles.option4}>
+            <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+              <Text style={styles.buttonTextRed}>Sign out</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.option5}>
+            <TouchableOpacity
+              onPress={handleDeleteUser}
+              style={styles.buttonOutline}
+            >
+              <Text style={styles.buttonTextRed}>Delete Account</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
       <BottomNav />
     </SafeAreaView>
@@ -113,13 +132,15 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   UserInfo: {
-    borderWidth: 0.5,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
+    // borderWidth: 0.5,
+    // borderLeftWidth: 0,
+    // borderRightWidth: 0,
+    borderRadius: 10,
     padding: 20,
-    width: "100%",
+    width: "95%",
     flexDirection: "row",
     marginBottom: 20,
+    backgroundColor: "#fff",
   },
   bigMain: {
     flex: 1,
@@ -127,7 +148,6 @@ const styles = StyleSheet.create({
   topNav: {
     flexDirection: "row",
     textAlign: "center",
-    marginBottom: 10,
     marginTop: 15,
     paddingBottom: 10,
     paddingTop: 10,
@@ -157,7 +177,7 @@ const styles = StyleSheet.create({
   button: {
     // backgroundColor: "#fc5c65",
     padding: 10,
-    borderRadius: 30,
+    // borderRadius: 10,
     // alignItems: "center",
     width: "100%",
     // justifyContent: "center",
@@ -166,7 +186,8 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     // borderColor: "gray",
     marginBottom: 10,
-    },
+    // backgroundColor: "#fff",
+  },
   buttonOutline: {
     // backgroundColor: "gray",
     // padding: 15,
@@ -178,7 +199,7 @@ const styles = StyleSheet.create({
     // marginTop: 20,
     // backgroundColor: "#fc5c65",
     padding: 10,
-    borderRadius: 30,
+    // borderRadius: 10,
     // alignItems: "center",
     width: "100%",
     // justifyContent: "center",
@@ -212,6 +233,59 @@ const styles = StyleSheet.create({
     borderRadius: 150 / 2,
     overflow: "hidden",
     borderWidth: 3,
-    borderColor: "red"
-  }
+    borderColor: "red",
+  },
+  section1: {
+    width: "100%",
+    marginTop: 20,
+  },
+  section2: {
+    width: "100%",
+    marginTop: 20,
+  },
+  section3: {
+    width: "100%",
+    marginTop: 20,
+  },
+  option1: {
+    width: "95%",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomWidth: 1,
+    borderColor: "gray",
+  },
+  option2: {
+    width: "95%",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  option3: {
+    width: "95%",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  option4: {
+    width: "95%",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomWidth: 1,
+    borderColor: "gray",
+    marginLeft: 10,
+  },
+  option5: {
+    width: "95%",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginLeft: 10,
+  },
 });
