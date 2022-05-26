@@ -11,6 +11,7 @@ import {
 import { auth, db } from "../../firebase";
 import BottomNav from "../components/BottomNav";
 import LottieView from "lottie-react-native";
+import { Icon } from "react-native-elements";
 
 const Option = ({ navigation }) => {
   const handleSignOut = () => {
@@ -77,6 +78,7 @@ const Option = ({ navigation }) => {
               style={styles.button}
             >
               <Text style={styles.buttonText}>Posted Products</Text>
+              <Icon style={styles.rightIcon} name="chevron-right" type="feather" color="gray" />
             </TouchableOpacity>
           </View>
           <View style={styles.option2}>
@@ -85,6 +87,7 @@ const Option = ({ navigation }) => {
               style={styles.button}
             >
               <Text style={styles.buttonText}>View Favorites</Text>
+              <Icon style={styles.rightIcon} name="chevron-right" type="feather" color="gray" />
             </TouchableOpacity>
           </View>
         </View>
@@ -175,38 +178,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   button: {
-    // backgroundColor: "#fc5c65",
     padding: 10,
-    // borderRadius: 10,
-    // alignItems: "center",
     width: "100%",
-    // justifyContent: "center",
-    // alignItems: "center",
     marginTop: 10,
-    // borderBottomWidth: 1,
-    // borderColor: "gray",
     marginBottom: 10,
-    // backgroundColor: "#fff",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   buttonOutline: {
-    // backgroundColor: "gray",
-    // padding: 15,
-    // borderRadius: 30,
-    // alignItems: "center",
-    // width: "60%",
-    // justifyContent: "center",
-    // alignItems: "center",
-    // marginTop: 20,
-    // backgroundColor: "#fc5c65",
     padding: 10,
-    // borderRadius: 10,
-    // alignItems: "center",
     width: "100%",
-    // justifyContent: "center",
-    // alignItems: "center",
     marginTop: 10,
-    // borderBottomWidth: 1,
-    // borderColor: "gray",
     marginBottom: 10,
   },
   buttonText: {
@@ -214,6 +196,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 17,
     marginLeft: 10,
+    width: "50%",
   },
   buttonTextRed: {
     color: "#fc5c65",
@@ -288,4 +271,9 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     marginLeft: 10,
   },
+  rightIcon: {
+    marginLeft: "auto",
+    marginRight: 5,
+  },
+
 });
