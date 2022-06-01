@@ -1,10 +1,18 @@
 import { SafeAreaView, Text } from "react-native";
 import React from "react";
-import { StyleSheet, View, TextInput, TouchableOpacity, Platform, Image, Switch } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  Image,
+  Switch,
+} from "react-native";
 import { auth, db, storage, firebase } from "../../../firebase";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import LottieView from "lottie-react-native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { PostProduct } from "../../redux/actions/postAction";
 
@@ -27,7 +35,7 @@ const AddProduct = ({ navigation }) => {
   React.useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
+      if (status !== "granted") {
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
@@ -36,9 +44,10 @@ const AddProduct = ({ navigation }) => {
   }, []);
 
   let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
+      alert("Permission to access camera roll is required!");
       return;
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -52,13 +61,17 @@ const AddProduct = ({ navigation }) => {
     if (fileSize >= 1000000) {
       alert("Choose a smaller sized image");
     } else {
-      var url = Platform.OS === 'ios' ? pickerResult.uri.replace('file://', '')
-        : pickerResult.uri;
-      const filename = pickerResult.uri.substring(pickerResult.uri.lastIndexOf('/') + 1);
+      var url =
+        Platform.OS === "ios"
+          ? pickerResult.uri.replace("file://", "")
+          : pickerResult.uri;
+      const filename = pickerResult.uri.substring(
+        pickerResult.uri.lastIndexOf("/") + 1
+      );
       setSelectedImage({
         uri: url,
         name: filename,
-        type: 'image/jpg',
+        type: "image/jpg",
       });
       return;
     }
@@ -66,20 +79,30 @@ const AddProduct = ({ navigation }) => {
   };
 
   function handleUpload() {
-    if (title === "" || number === "" || description === "" || selectedImage === null) {
+    if (
+      title === "" ||
+      number === "" ||
+      description === "" ||
+      selectedImage === null
+    ) {
       alert("Fill all fields");
       return;
     } else {
       if (location != null) {
-        dispatch(PostProduct(selectedImage, {
-          title: title,
-          Name: auth.currentUser?.displayName,
-          PhoneNumber: number,
-          Description: description,
-          Email: auth.currentUser?.email,
-          Location: new firebase.firestore.GeoPoint(location?.coords.latitude, location?.coords.longitude),
-          Switch: switchValue,
-        }));
+        dispatch(
+          PostProduct(selectedImage, {
+            title: title,
+            Name: auth.currentUser?.displayName,
+            PhoneNumber: number,
+            Description: description,
+            Email: auth.currentUser?.email,
+            Location: new firebase.firestore.GeoPoint(
+              location?.coords.latitude,
+              location?.coords.longitude
+            ),
+            Switch: switchValue,
+          })
+        );
         navigation.replace("Home");
       }
     }
@@ -88,7 +111,7 @@ const AddProduct = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.main}>
       <View>
-        {!true ?
+        {!true ? (
           <>
             <LottieView
               source={require("../../../assets/88404-loading-bubbles.json")}
@@ -96,14 +119,26 @@ const AddProduct = ({ navigation }) => {
               autoPlay
             />
           </>
-          :
+        ) : (
           <>
             <View>
               <View style={styles.topNav}>
                 <Text style={styles.title}>Share Your Food</Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: "red" }}
+                  thumbColor={switchValue ? "red" : "#f4f3f4"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={(value) => {
+                    setSwitchValue(value);
+                  }}
+                  value={switchValue}
+                />
               </View>
               <View style={styles.ImageContainer}>
-                <Image source={{ uri: selectedImage.uri }} style={styles.Image} />
+                <Image
+                  source={{ uri: selectedImage.uri }}
+                  style={styles.Image}
+                />
               </View>
               <TextInput
                 placeholder="Enter title"
@@ -129,34 +164,34 @@ const AddProduct = ({ navigation }) => {
                 onChangeText={(text) => setDescription(text)}
                 style={styles.inputs}
               />
-              <Switch
-                trackColor={{ false: "#767577", true: "red" }}
-                thumbColor={switchValue ? "red" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={(value) => {
-                  setSwitchValue(value);
-                }}
-                value={switchValue}
-              />
               <View style={styles.buttonContainer}>
-                <TouchableOpacity TouchableOpacity onPress={openImagePickerAsync} style={[styles.button, { marginBottom: 10 }]}>
-                  <Text style={styles.buttonText}>Pick a photo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleUpload} style={styles.button}>
-                  <Text style={styles.buttonText}>Add</Text>
-                </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => navigation.replace("Home")}
-                  style={styles.buttonOutline}
+                  TouchableOpacity
+                  onPress={openImagePickerAsync}
+                  style={[styles.photoButton, { marginBottom: 10 }]}
                 >
-                  <Text style={styles.buttonText}>Cancel</Text>
+                  <Text style={styles.photoButtonText}>Pick a photo</Text>
                 </TouchableOpacity>
+                <View style={styles.buttonPosition}>
+                  <TouchableOpacity
+                    onPress={() => navigation.replace("Home")}
+                    style={styles.buttonOutline}
+                  >
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={handleUpload}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>Add</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </>
-        }
+        )}
       </View>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 
@@ -173,6 +208,7 @@ const styles = StyleSheet.create({
   },
   topNav: {
     flexDirection: "row",
+    justifyContent: "space-between",
     textAlign: "center",
     marginBottom: 40,
     marginTop: 40,
@@ -207,14 +243,30 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 20,
   },
   button: {
     backgroundColor: "#fc5c65",
-    width: "80%",
+    width: "40%",
     padding: 20,
-    borderRadius: 30,
+    borderRadius: 20,
     alignItems: "center",
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  photoButton: {
+    backgroundColor: "white",
+    borderColor: "#003f5c",
+    borderWidth: 1.5,
+    width: "90%",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  photoButtonText: {
+    color: "#003f5c",
+    fontWeight: "700",
+    fontSize: 18,
   },
   buttonText: {
     color: "white",
@@ -222,15 +274,31 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   buttonOutline: {
-    marginTop: 10,
     backgroundColor: "gray",
-    width: "60%",
+    width: "40%",
     padding: 20,
-    borderRadius: 30,
+    borderRadius: 20,
     alignItems: "center",
+    marginTop: 20,
   },
   animation: {
     width: "100%",
     height: "90%",
   },
+  buttonPosition: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  ImageContainer: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 0,
+    marginBottom: 20,
+    marginBottom: 20,
+    borderRadius: 25,
+    padding: 10,
+    marginHorizontal: 20,
+  },
+
 });
