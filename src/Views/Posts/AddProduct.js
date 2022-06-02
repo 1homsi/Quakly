@@ -111,7 +111,7 @@ const AddProduct = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.main}>
       <View>
-        {!true ? (
+        {!location ? (
           <>
             <LottieView
               source={require("../../../assets/88404-loading-bubbles.json")}
